@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/Configurations/**"
+                , "${workspaceFolder}/Libraries/**"
+            ],
+            "defines": [
+                "__attribute__(n)=",
+                "__TASKING__",
+                "__TC3XX__"
+            ]
+        }
+    ],
+    "version": 4
+}
