@@ -38,7 +38,7 @@
 /*********************************************************************************************************************/
 #define LED2         &MODULE_P00, 6  /* LED2                                                                         */
 #define LED1         &MODULE_P00, 5  /* LED1                                                                         */
-#define WAIT_TIME   1000            /* Number of milliseconds to wait between each duty cycle change                */
+#define WAIT_TIME   2000            /* Number of milliseconds to wait between each duty cycle change                */
 
 /*********************************************************************************************************************/
 /*-------------------------------------------------Global variables--------------------------------------------------*/
@@ -68,7 +68,7 @@ void turnLEDon(void)
 {
     if(g_turnLEDon == TRUE)
     {
-        IfxPort_setPinLow(LED1);     /* Turn on the LED (LED is low-level active)    */
+        IfxPort_setPinLow(LED2);     /* Turn on the LED (LED is low-level active)    */
     }
 }
 
@@ -77,7 +77,7 @@ void turnLEDoff(void)
 {
     if(g_turnLEDon == FALSE)
     {
-        IfxPort_setPinHigh(LED1);    /* Turn off the LED (LED is low-level active)   */
+        IfxPort_setPinHigh(LED2);    /* Turn off the LED (LED is low-level active)   */
     }
 }
 
