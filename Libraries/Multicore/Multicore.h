@@ -1,5 +1,5 @@
 /**********************************************************************************************************************
- * \file Flash_Programming.h
+ * \file Multicore.h
  * \copyright Copyright (C) Infineon Technologies AG 2019
  *
  * Use of this file is subject to the terms of use agreed between (i) you or the company in which ordinary course of
@@ -25,16 +25,15 @@
  * IN THE SOFTWARE.
  *********************************************************************************************************************/
 
-#ifndef FLASH_PROGRAMMING_H_
-#define FLASH_PROGRAMMING_H_
+#ifndef MULTICORE_H_
+#define MULTICORE_H_
 
 /*********************************************************************************************************************/
 /*------------------------------------------------Function Prototypes------------------------------------------------*/
 /*********************************************************************************************************************/
-void initLEDs(void);            /* Function that initializes the LEDs                                               */
-void writeProgramFlash(void);   /* Function that flashes the Program Flash memory calling the routines from the PSPR*/
-void writeDataFlash(void);      /* Function that flashes the Data Flash memory                                      */
-void verifyProgramFlash(void);  /* Function that verifies the data written in the Program Flash memory              */
-void verifyDataFlash(void);     /* Function that verifies the data written in the Data Flash memory                 */
+void initLEDAndTime(void);
+void turnLEDon(void);
+void turnLEDoff(void);
+void controlLEDflag(void);
 
-#endif /* FLASH_PROGRAMMING_H_ */
+#endif /* MULTICORE_H_ */

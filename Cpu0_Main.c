@@ -28,7 +28,7 @@
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
 #include "Ifx_Cfg_Ssw.h"
-#include "Flash_Programming.h"
+#include "Multicore.h"
 
 IFX_ALIGN(4) IfxCpu_syncEvent cpuSyncEvent = 0;
 
@@ -46,11 +46,11 @@ void core0_main(void)
     IfxCpu_emitEvent(&cpuSyncEvent);
     IfxCpu_waitEvent(&cpuSyncEvent, 1);
     
-    initLEDs();                 /* Initialize the LEDs                                     */
-    P00_OUT.B.P5 = 1; // Turn Off LED1
-    P00_OUT.B.P6 = 0; // Turn On LED2
-    
+
+    initLEDAndTime();
+
     while(1)
     {
+        turnLEDon();
     }
 }

@@ -28,6 +28,7 @@
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
 #include "Ifx_Cfg_Ssw.h"
+#include "Multicore.h"
 
 extern IfxCpu_syncEvent cpuSyncEvent;
 
@@ -46,5 +47,6 @@ void core2_main(void)
     
     while(1)
     {
+        controlLEDflag();
     }
 }
