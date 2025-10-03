@@ -4,7 +4,8 @@
     "ifx_types.h": "c",
     "flash_programming.h": "c",
     "ifxcpu.h": "c",
-    "ifx_cfg_ssw.h": "c"
+    "ifx_cfg_ssw.h": "c",
+    "bsp.h": "c"
   },
   "C_Cpp.default.compilerPath": "/usr/bin/gcc"
 }
