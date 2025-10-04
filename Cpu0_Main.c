@@ -31,6 +31,7 @@
 #include "Flash_Programming.h"
 
 IFX_ALIGN(4) IfxCpu_syncEvent cpuSyncEvent = 0;
+uint8 status = -1;
 
 void core0_main(void)
 {
@@ -45,11 +46,15 @@ void core0_main(void)
     /* Wait for CPU sync event */
     IfxCpu_emitEvent(&cpuSyncEvent);
     IfxCpu_waitEvent(&cpuSyncEvent, 1);
-    
-    initLEDs();                 /* Initialize the LEDs                                     */
-    P00_OUT.B.P5 = 1; // Turn Off LED1
-    P00_OUT.B.P6 = 0; // Turn On LED2
-    
+
+    status = Flash_eraseSector(0xA00E0000, 1);
+
+    uint32 dataToWrite[8] = {0x11111111, 0x22222222, 0x33333333, 0x44444444, 0x55555555, 0x66666666, 0x77777777, 0x88888888};
+    // uint32 dataToWrite[8] = {0x88888888, 0x77777777, 0x66666666, 0x55555555, 0x44444444, 0x33333333, 0x22222222, 0x11111111};
+    Flash_writePage(0xA00E0000, dataToWrite, 8);
+
+    __nop();
+
     while(1)
     {
     }

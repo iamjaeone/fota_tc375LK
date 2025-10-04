@@ -1,11 +1,11 @@
 TriCore Debug (TASKING)
+!TriCore Debug (TASKING)/sota.map
 
 *.o
 *.obj
 *.elf
 *.hex
 *.srec
-*.map
 *.lst
 *.dep
 *.d

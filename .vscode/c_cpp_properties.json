@@ -3,13 +3,51 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/Configurations/**"
-                , "${workspaceFolder}/Libraries/**"
+                "${workspaceFolder}/Configurations/**",
+                "${workspaceFolder}/Libraries/**",
+                "${workspaceFolder}/Libraries/Multicore/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Asclin/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Can/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Ccu6/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Cif/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Convctrl/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Cpu/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Dma/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Dts/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Ebu/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Edsadc/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Emem/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Eray/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Evadc/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Fce/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Flash/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Geth/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Gpt12/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Gtm/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Hspdm/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Hssl/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/I2c/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Iom/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Msc/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Mtu/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Pms/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Port/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Psi5/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Psi5s/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Qspi/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Rif/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Scu/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Sdmmc/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Sent/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Smu/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Spu/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Src/Std/",
+                "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Stm/Std/"
             ],
             "defines": [
                 "__attribute__(n)=",
                 "__TASKING__",
-                "__TC3XX__"
+                "__CPU__=tc37x"
             ]
         }
     ],
