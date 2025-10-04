@@ -31,6 +31,7 @@
 #include "Multicore.h"
 
 IFX_ALIGN(4) IfxCpu_syncEvent cpuSyncEvent = 0;
+uint8 status = -1;
 
 void core0_main(void)
 {
