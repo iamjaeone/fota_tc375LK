@@ -47,13 +47,18 @@ void core0_main(void)
     IfxCpu_emitEvent(&cpuSyncEvent);
     IfxCpu_waitEvent(&cpuSyncEvent, 1);
 
-    status = Flash_eraseSector(0xA00E0000, 1);
+ 
+    // status = Flash_eraseSector(0xA02B0000, 1);
 
-    uint32 dataToWrite[8] = {0x11111111, 0x22222222, 0x33333333, 0x44444444, 0x55555555, 0x66666666, 0x77777777, 0x88888888};
-    // uint32 dataToWrite[8] = {0x88888888, 0x77777777, 0x66666666, 0x55555555, 0x44444444, 0x33333333, 0x22222222, 0x11111111};
-    Flash_writePage(0xA00E0000, dataToWrite, 8);
-
-    __nop();
+    // 8 Bytes: page of DFLASH
+    uint32 dataToWriteFlash[16] = {
+        0x66666666, 0x66666666, 0x66666666, 0x66666666,
+        0x66666666, 0x66666666, 0x66666666, 0x66666666,
+        0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+        0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
+    };
+    // 1024 * 8 Bytes = 8192 Bytes
+    status = Flash_writePage(0xA02FFFE0, dataToWriteFlash, 8);
 
     while(1)
     {

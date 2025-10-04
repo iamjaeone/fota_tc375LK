@@ -5,7 +5,6 @@
             "includePath": [
                 "${workspaceFolder}/Configurations/**",
                 "${workspaceFolder}/Libraries/**",
-                "${workspaceFolder}/Libraries/Multicore/",
                 "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Asclin/Std/",
                 "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Can/Std/",
                 "${workspaceFolder}/Libraries/iLLD/TC3xx/Tricore/Ccu6/Std/",
