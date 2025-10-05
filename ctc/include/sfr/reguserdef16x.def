@@ -1,0 +1,117 @@
+;***************************************************************************
+;**
+;** Version: @(#)reguserdef16x.xml	1.4 11/11/22
+;** 
+;** This file contains all Core-SFR and BIT names and on-chip register definitions
+;** 
+;** Copyright 2002-2009 TASKING BV
+;**
+;***************************************************************************
+	.if	!@DEF('_REGUSERDEF16X_DEF')
+	.define	_REGUSERDEF16X_DEF '1'
+; Macros, such as MMU_CON, that expand to a 16-bit number do not directly represent a memory address.
+; They are intended to be used with the instructions mfcr and mtcr.
+core_base      	.equ	0xf881    	; The base address off the memory for the CSFR's core 0
+core_base_0    	.equ	0xf881    	; The base address off the memory for the CSFR's core 0
+core_base_1    	.equ	0xf883    	; The base address off the memory for the CSFR's core 1
+core_base_2    	.equ	0xf885    	; The base address off the memory for the CSFR's core 2
+MMU_CON        	.equ	0x8000    	; MMU Control Register
+PCXI           	.equ	0xfe00    	; Previous Context Information Register
+PSW            	.equ	0xfe04    	; Program Status Word
+PC             	.equ	0xfe08    	; Program Counter
+SYSCON         	.equ	0xfe14    	; System Configuration Register
+CORE_ID        	.equ	0xfe1c    	; Core Identification Register
+CPU_ID         	.equ	0xfe18    	; CPU Identification Register
+BIV            	.equ	0xfe20    	; Base Interrupt Vector Table Pointer
+BTV            	.equ	0xfe24    	; Base Trap Vector Table Pointer
+ISP            	.equ	0xfe28    	; Interrupt Stack Pointer
+ICR            	.equ	0xfe2c    	; Interrupt Control Register
+FCX            	.equ	0xfe38    	; Free CSA List Head Pointer
+LCX            	.equ	0xfe3c    	; Free CSA List Limit Pointer
+PMA0           	.equ	0x801c    	; Physical Memory Attributes
+COMPAT         	.equ	0x9400    	; Compatibility Control Register
+SCU_WDTCPU0CON0	.equ	0xf0036100	; CPU0 WDT Control Register 0
+SCU_WDTCPU0CON1	.equ	0xf0036104	; CPU0 WDT Control Register 1
+SCU_WDTCPU0SR  	.equ	0xf0036108	; CPU0 WDT Status Register
+SCU_WDTCPU1CON0	.equ	0xf003610c	; CPU1 WDT Control Register 0
+SCU_WDTCPU1CON1	.equ	0xf0036110	; CPU1 WDT Control Register 1
+SCU_WDTCPU1SR  	.equ	0xf0036114	; CPU1 WDT Status Register
+SCU_WDTCPU2CON0	.equ	0xf0036118	; CPU2 WDT Control Register 0
+SCU_WDTCPU2CON1	.equ	0xf003611c	; CPU2 WDT Control Register 1
+SCU_WDTCPU2SR  	.equ	0xf0036120	; CPU2 WDT Status Register
+SCU_WDTSCON0   	.equ	0xf00360f0	; Safety WDT Control Register 0
+SCU_WDTSCON1   	.equ	0xf00360f4	; Safety WDT Control Register 1
+SCU_WDTSSR     	.equ	0xf00360f8	; Safety WDT Status Register
+STM0_TIM0      	.equ	0xf0000010	; Timer Register 0
+STM0_TIM1      	.equ	0xf0000014	; Timer Register 1
+STM0_TIM2      	.equ	0xf0000018	; Timer Register 2
+STM0_TIM3      	.equ	0xf000001c	; Timer Register 3
+STM0_TIM4      	.equ	0xf0000020	; Timer Register 4
+STM0_TIM5      	.equ	0xf0000024	; Timer Register 5
+STM0_TIM6      	.equ	0xf0000028	; Timer Register 6
+STM1_TIM0      	.equ	0xf0000110	; Timer Register 0
+STM1_TIM1      	.equ	0xf0000114	; Timer Register 1
+STM1_TIM2      	.equ	0xf0000118	; Timer Register 2
+STM1_TIM3      	.equ	0xf000011c	; Timer Register 3
+STM1_TIM4      	.equ	0xf0000120	; Timer Register 4
+STM1_TIM5      	.equ	0xf0000124	; Timer Register 5
+STM1_TIM6      	.equ	0xf0000128	; Timer Register 6
+STM2_TIM0      	.equ	0xf0000210	; Timer Register 0
+STM2_TIM1      	.equ	0xf0000214	; Timer Register 1
+STM2_TIM2      	.equ	0xf0000218	; Timer Register 2
+STM2_TIM3      	.equ	0xf000021c	; Timer Register 3
+STM2_TIM4      	.equ	0xf0000220	; Timer Register 4
+STM2_TIM5      	.equ	0xf0000224	; Timer Register 5
+STM2_TIM6      	.equ	0xf0000228	; Timer Register 6
+STM0_CAP       	.equ	0xf000002c	; Timer Capture Register
+STM1_CAP       	.equ	0xf000012c	; Timer Capture Register
+STM2_CAP       	.equ	0xf000022c	; Timer Capture Register
+CPU0_MMU_CON   	.equ	0xf8818000	; MMU Control Register
+CPU1_MMU_CON   	.equ	0xf8838000	; MMU Control Register
+CPU2_MMU_CON   	.equ	0xf8858000	; MMU Control Register
+CPU0_PCXI      	.equ	0xf881fe00	; Previous Context Information Register
+CPU1_PCXI      	.equ	0xf883fe00	; Previous Context Information Register
+CPU2_PCXI      	.equ	0xf885fe00	; Previous Context Information Register
+CPU0_PSW       	.equ	0xf881fe04	; Program Status Word
+CPU1_PSW       	.equ	0xf883fe04	; Program Status Word
+CPU2_PSW       	.equ	0xf885fe04	; Program Status Word
+CPU0_PC        	.equ	0xf881fe08	; Program Counter
+CPU1_PC        	.equ	0xf883fe08	; Program Counter
+CPU2_PC        	.equ	0xf885fe08	; Program Counter
+CPU0_SYSCON    	.equ	0xf881fe14	; System Configuration Register
+CPU1_SYSCON    	.equ	0xf883fe14	; System Configuration Register
+CPU2_SYSCON    	.equ	0xf885fe14	; System Configuration Register
+CPU0_CORE_ID   	.equ	0xf881fe1c	; Core Identification Register
+CPU1_CORE_ID   	.equ	0xf883fe1c	; Core Identification Register
+CPU2_CORE_ID   	.equ	0xf885fe1c	; Core Identification Register
+CPU0_CPU_ID    	.equ	0xf881fe18	; CPU Identification Register
+CPU1_CPU_ID    	.equ	0xf883fe18	; CPU Identification Register
+CPU2_CPU_ID    	.equ	0xf885fe18	; CPU Identification Register
+CPU0_BIV       	.equ	0xf881fe20	; Base Interrupt Vector Table Pointer
+CPU1_BIV       	.equ	0xf883fe20	; Base Interrupt Vector Table Pointer
+CPU2_BIV       	.equ	0xf885fe20	; Base Interrupt Vector Table Pointer
+CPU0_BTV       	.equ	0xf881fe24	; Base Trap Vector Table Pointer
+CPU1_BTV       	.equ	0xf883fe24	; Base Trap Vector Table Pointer
+CPU2_BTV       	.equ	0xf885fe24	; Base Trap Vector Table Pointer
+CPU0_ICR       	.equ	0xf881fe2c	; Interrupt Control Register
+CPU1_ICR       	.equ	0xf883fe2c	; Interrupt Control Register
+CPU2_ICR       	.equ	0xf885fe2c	; Interrupt Control Register
+CPU0_ISP       	.equ	0xf881fe28	; Interrupt Stack Pointer
+CPU1_ISP       	.equ	0xf883fe28	; Interrupt Stack Pointer
+CPU2_ISP       	.equ	0xf885fe28	; Interrupt Stack Pointer
+CPU0_FCX       	.equ	0xf881fe38	; Free CSA List Head Pointer
+CPU1_FCX       	.equ	0xf883fe38	; Free CSA List Head Pointer
+CPU2_FCX       	.equ	0xf885fe38	; Free CSA List Head Pointer
+CPU0_LCX       	.equ	0xf881fe3c	; Free CSA List Limit Pointer
+CPU1_LCX       	.equ	0xf883fe3c	; Free CSA List Limit Pointer
+CPU2_LCX       	.equ	0xf885fe3c	; Free CSA List Limit Pointer
+CPU0_PMA0      	.equ	0xf881801c	; Data Access CacheabilityRegister
+CPU1_PMA0      	.equ	0xf883801c	; Data Access CacheabilityRegister
+CPU2_PMA0      	.equ	0xf885801c	; Data Access CacheabilityRegister
+CPU0_COMPAT    	.equ	0xf8819400	; Compatibility Control Register
+CPU1_COMPAT    	.equ	0xf8839400	; Compatibility Control Register
+CPU2_COMPAT    	.equ	0xf8859400	; Compatibility Control Register
+CPU0_DBGSR     	.equ	0xf881fd00	; Debug Status Register
+CPU1_DBGSR     	.equ	0xf883fd00	; Debug Status Register
+CPU2_DBGSR     	.equ	0xf885fd00	; Debug Status Register
+	.endif ; !@DEF('_REGUSERDEF16X_DEF')

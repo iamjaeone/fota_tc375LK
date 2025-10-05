@@ -1,9 +1,0 @@
-{
-  "files.associations": {
-    "ifxscuwdt.h": "c",
-    "ifx_types.h": "c",
-    "flash_programming.h": "c",
-    "ifxcpu.h": "c",
-    "ifx_cfg_ssw.h": "c",
-  }
-}

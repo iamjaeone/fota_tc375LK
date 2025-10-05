@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Bootloader",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/../ctc/include/**"
+            ],
+            "defines": [
+                "__attribute__(n)=",
+                "__interrupt(n)=",
+                "__vector_table(vectabNum)=",
+                "__TASKING__",
+                "__CPU__=tc37x"
+            ]
+        }
+    ],
+    "version": 4
+}

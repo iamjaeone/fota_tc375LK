@@ -1,0 +1,424 @@
+<?xml version="1.0" ?>
+
+
+<sfrfile core="userdef16x" xmlns="http://www.tasking.com/schema/sfrfile/v1.0">
+	<header>
+
+Version: @(#)reguserdef16x.xml	1.4 11/11/22
+
+This file contains all Core-SFR and BIT names and on-chip register definitions
+
+Copyright 2002-2009 TASKING BV
+
+	</header>
+	<group name="Core Base">
+		<sfr name="core_base" address="0xf881" description="The base address off the memory for the CSFR's core 0"/>
+		<sfr name="core_base_0" address="0xf881" description="The base address off the memory for the CSFR's core 0"/>
+		<sfr name="core_base_1" address="0xf883" description="The base address off the memory for the CSFR's core 1"/>
+		<sfr name="core_base_2" address="0xf885" description="The base address off the memory for the CSFR's core 2"/>
+	</group>
+	<group name="CSFR" description="Core Special Function Registers">
+		<sfr name="MMU_CON" address="0x8000" default="0x00008000" description="MMU Control Register"/>
+		<sfr name="PCXI" address="0xfe00" default="0x00000000" description="Previous Context Information Register"/>
+		<sfr name="PSW" address="0xfe04" default="0x00000B80" description="Program Status Word"/>
+		<sfr name="PC" address="0xfe08" default="0x00000000" description="Program Counter"/>
+		<sfr name="SYSCON" address="0xfe14" default="0x00000000" description="System Configuration Register"/>
+		<sfr name="CORE_ID" address="0xfe1c" default="0x00000000" description="Core Identification Register"/>
+		<sfr name="CPU_ID" address="0xfe18" default="0x00C0C010" description="CPU Identification Register"/>
+		<sfr name="BIV" address="0xfe20" default="0x00000000" description="Base Interrupt Vector Table Pointer"/>
+		<sfr name="BTV" address="0xfe24" default="0xA0000100" description="Base Trap Vector Table Pointer"/>
+		<sfr name="ISP" address="0xfe28" default="0x00000100" description="Interrupt Stack Pointer"/>
+		<sfr name="ICR" address="0xfe2c" default="0x00000000" description="Interrupt Control Register"/>
+		<sfr name="FCX" address="0xfe38" default="0x00000000" description="Free CSA List Head Pointer"/>
+		<sfr name="LCX" address="0xfe3c" default="0x00000000" description="Free CSA List Limit Pointer"/>
+		<sfr name="PMA0" address="0x801c" default="0xC00003FF" description="Physical Memory Attributes"/>
+		<sfr name="COMPAT" address="0x9400" default="0xFFFFFFFF" description="Compatibility Control Register"/>
+	</group>
+	<group name="SCU">
+		<sfrtype name="SCU_WDTCPU0CON0_type">
+			<bitfield name="ENDINIT" start="0" end="0" access="rw" description="End-of-Initialization Control Bit" qualify="__sfrbit32">
+				<value value="0" description="Access to Endinit-protected registers is permitted (default after Application Reset)"/>
+				<value value="1" description="Access to Endinit-protected registers is not permitted."/>
+			</bitfield>
+			<bitfield name="LCK" start="1" end="1" access="rw" description="Lock Bit to Control Access to WDTxCON0" qualify="__sfrbit32">
+				<value value="0" description="Register WDTxCON0 is unlocked"/>
+				<value value="1" description="Register WDTxCON0 is locked (default after Application Reset)"/>
+			</bitfield>
+			<bitfield name="HPW0" start="2" end="3" access="w" description="Hardware Password 0" qualify="__sfrbit32"/>
+			<bitfield name="HPW1" start="4" end="7" access="w" description="Hardware Password 1" qualify="__sfrbit32"/>
+			<bitfield name="PW" start="8" end="15" access="rw" description="User-Definable Password Field for Access to WDTxCON0" qualify="__sfrbit32"/>
+			<bitfield name="REL" start="16" end="31" access="rw" description="Reload Value for the WDT" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="SCU_WDTCPU0CON0" address="0xf0036100" default="0xFFFC000E" sfrtype="SCU_WDTCPU0CON0_type" description="CPU0 WDT Control Register 0"/>
+		<sfrtype name="SCU_WDTCPU0CON1_type">
+			<bitfield name="IR" start="2" end="2" access="rw" description="Input Frequency Request Control Bit">
+				<value value="0" description="Request to set input frequency to fSPB/16384."/>
+				<value value="1" description="Request to set input frequency to fSPB/256."/>
+			</bitfield>
+			<bitfield name="DR" start="3" end="3" access="rw" description="Disable Request Control Bit">
+				<value value="0" description="Request to enable the WDT"/>
+				<value value="1" description="Request to disable the WDT"/>
+			</bitfield>
+			<bitfield name="UR" start="6" end="6" access="rw" description="Unlock Restriction Request Control Bit">
+				<value value="0" description="Request to disable SMU restriction of WDT unlock"/>
+				<value value="1" description="Request to enable SMU restriction of WDT unlock"/>
+			</bitfield>
+		</sfrtype>
+		<sfr name="SCU_WDTCPU0CON1" address="0xf0036104" default="0x00000000" sfrtype="SCU_WDTCPU0CON1_type" description="CPU0 WDT Control Register 1"/>
+		<sfrtype name="SCU_WDTCPU0SR_type">
+			<bitfield name="AE" start="0" end="0" access="r" description="Watchdog Access Error Status Flag">
+				<value value="0" description="No Watchdog access error"/>
+				<value value="1" description="A Watchdog access error has occurred"/>
+			</bitfield>
+			<bitfield name="OE" start="1" end="1" access="r" description="Watchdog Overflow Error Status Flag">
+				<value value="0" description="No Watchdog overflow error"/>
+				<value value="1" description="A Watchdog overflow error has occurred"/>
+			</bitfield>
+			<bitfield name="IS" start="2" end="2" access="r" description="Watchdog Input Clock Status Flag">
+				<value value="0" description="The timer operation clock is fSPB/16384 (default after Application Reset)"/>
+				<value value="1" description="The timer operation clock is fSPB/256"/>
+			</bitfield>
+			<bitfield name="DS" start="3" end="3" access="r" description="Watchdog Enable/Disable Status Flag">
+				<value value="0" description="WDT is enabled (default after Application Reset)"/>
+				<value value="1" description="WDT is disabled"/>
+			</bitfield>
+			<bitfield name="TO" start="4" end="4" access="r" description="Watchdog Time-Out Mode Flag">
+				<value value="0" description="The Watchdog is not operating in Time-Out Mode"/>
+				<value value="1" description="The Watchdog is operating in Time-Out Mode (default after Application Reset)"/>
+			</bitfield>
+			<bitfield name="US" start="6" end="6" access="r" description="SMU Unlock Restriction Status Flag">
+				<value value="0" description="WDT unlock permitted at any time"/>
+				<value value="1" description="WDT unlock only permitted when the SMU is in the RUN state."/>
+			</bitfield>
+			<bitfield name="TIM" start="16" end="31" access="r" description="Timer Value"/>
+		</sfrtype>
+		<sfr name="SCU_WDTCPU0SR" address="0xf0036108" default="0xFFFC0010" sfrtype="SCU_WDTCPU0SR_type" description="CPU0 WDT Status Register"/>
+		<sfr name="SCU_WDTCPU1CON0" address="0xf003610c" default="0xFFFC000E" sfrtype="SCU_WDTCPU0CON0_type" description="CPU1 WDT Control Register 0"/>
+		<sfr name="SCU_WDTCPU1CON1" address="0xf0036110" default="0x00000000" sfrtype="SCU_WDTCPU0CON1_type" description="CPU1 WDT Control Register 1"/>
+		<sfr name="SCU_WDTCPU1SR" address="0xf0036114" default="0xFFFC0010" sfrtype="SCU_WDTCPU0SR_type" description="CPU1 WDT Status Register"/>
+		<sfr name="SCU_WDTCPU2CON0" address="0xf0036118" default="0xFFFC000E" sfrtype="SCU_WDTCPU0CON0_type" description="CPU2 WDT Control Register 0"/>
+		<sfr name="SCU_WDTCPU2CON1" address="0xf003611c" default="0x00000000" sfrtype="SCU_WDTCPU0CON1_type" description="CPU2 WDT Control Register 1"/>
+		<sfr name="SCU_WDTCPU2SR" address="0xf0036120" default="0xFFFC0010" sfrtype="SCU_WDTCPU0SR_type" description="CPU2 WDT Status Register"/>
+		<sfr name="SCU_WDTSCON0" address="0xf00360f0" default="0xFFFC000E" sfrtype="SCU_WDTCPU0CON0_type" description="Safety WDT Control Register 0"/>
+		<sfrtype name="SCU_WDTSCON1_type">
+			<bitfield name="CLRIRF" start="0" end="0" access="rw" description="Clear Internal Reset Flag">
+				<value value="0" description="No action"/>
+				<value value="1" description="Request to clear the internal previous-SMU-reset flag"/>
+			</bitfield>
+			<bitfield name="IR" start="2" end="2" access="rw" description="Input Frequency Request Control Bit">
+				<value value="0" description="Request to set input frequency to fSPB/16384."/>
+				<value value="1" description="Request to set input frequency to fSPB/256."/>
+			</bitfield>
+			<bitfield name="DR" start="3" end="3" access="rw" description="Disable Request Control Bit">
+				<value value="0" description="Request to enable the WDT"/>
+				<value value="1" description="Request to disable the WDT"/>
+			</bitfield>
+			<bitfield name="UR" start="6" end="6" access="rw" description="Unlock Restriction Request Control Bit">
+				<value value="0" description="Request to disable SMU restriction of WDT unlock"/>
+				<value value="1" description="Request to enable SMU restriction of WDT unlock"/>
+			</bitfield>
+		</sfrtype>
+		<sfr name="SCU_WDTSCON1" address="0xf00360f4" default="0x00000000" sfrtype="SCU_WDTSCON1_type" description="Safety WDT Control Register 1"/>
+		<sfr name="SCU_WDTSSR" address="0xf00360f8" default="0xFFFC0010" sfrtype="SCU_WDTCPU0SR_type" description="Safety WDT Status Register"/>
+	</group>
+	<group name="STM" description="System Timer">
+		<sfrtype name="STM0_TIM0_type">
+			<bitfield name="STM[31:0]" start="0" end="31" access="r" description="System Timer Bits [31:0]"/>
+		</sfrtype>
+		<sfr name="STM0_TIM0" address="0xf0000010" default="0x00000000" sfrtype="STM0_TIM0_type" description="Timer Register 0"/>
+		<sfrtype name="STM0_TIM1_type">
+			<bitfield name="STM[35:4]" start="0" end="31" access="r" description="System Timer Bits [35:4]"/>
+		</sfrtype>
+		<sfr name="STM0_TIM1" address="0xf0000014" default="0x00000000" sfrtype="STM0_TIM1_type" description="Timer Register 1"/>
+		<sfrtype name="STM0_TIM2_type">
+			<bitfield name="STM[39:8]" start="0" end="31" access="r" description="System Timer Bits [39:8]"/>
+		</sfrtype>
+		<sfr name="STM0_TIM2" address="0xf0000018" default="0x00000000" sfrtype="STM0_TIM2_type" description="Timer Register 2"/>
+		<sfrtype name="STM0_TIM3_type">
+			<bitfield name="STM[43:12]" start="0" end="31" access="r" description="System Timer Bits [43:12]"/>
+		</sfrtype>
+		<sfr name="STM0_TIM3" address="0xf000001c" default="0x00000000" sfrtype="STM0_TIM3_type" description="Timer Register 3"/>
+		<sfrtype name="STM0_TIM4_type">
+			<bitfield name="STM[47:16]" start="0" end="31" access="r" description="System Timer Bits [47:16]"/>
+		</sfrtype>
+		<sfr name="STM0_TIM4" address="0xf0000020" default="0x00000000" sfrtype="STM0_TIM4_type" description="Timer Register 4"/>
+		<sfrtype name="STM0_TIM5_type">
+			<bitfield name="STM[51:20]" start="0" end="31" access="r" description="System Timer Bits [51:20]"/>
+		</sfrtype>
+		<sfr name="STM0_TIM5" address="0xf0000024" default="0x00000000" sfrtype="STM0_TIM5_type" description="Timer Register 5"/>
+		<sfrtype name="STM0_TIM6_type">
+			<bitfield name="STM[63:32]" start="0" end="31" access="r" description="System Timer Bits [63:32]"/>
+		</sfrtype>
+		<sfr name="STM0_TIM6" address="0xf0000028" default="0x00000000" sfrtype="STM0_TIM6_type" description="Timer Register 6"/>
+
+		<sfr name="STM1_TIM0" address="0xf0000110" default="0x00000000" sfrtype="STM0_TIM0_type" description="Timer Register 0"/>
+		<sfr name="STM1_TIM1" address="0xf0000114" default="0x00000000" sfrtype="STM0_TIM1_type" description="Timer Register 1"/>
+		<sfr name="STM1_TIM2" address="0xf0000118" default="0x00000000" sfrtype="STM0_TIM2_type" description="Timer Register 2"/>
+		<sfr name="STM1_TIM3" address="0xf000011c" default="0x00000000" sfrtype="STM0_TIM3_type" description="Timer Register 3"/>
+		<sfr name="STM1_TIM4" address="0xf0000120" default="0x00000000" sfrtype="STM0_TIM4_type" description="Timer Register 4"/>
+		<sfr name="STM1_TIM5" address="0xf0000124" default="0x00000000" sfrtype="STM0_TIM5_type" description="Timer Register 5"/>
+		<sfr name="STM1_TIM6" address="0xf0000128" default="0x00000000" sfrtype="STM0_TIM6_type" description="Timer Register 6"/>
+		<sfr name="STM2_TIM0" address="0xf0000210" default="0x00000000" sfrtype="STM0_TIM0_type" description="Timer Register 0"/>
+		<sfr name="STM2_TIM1" address="0xf0000214" default="0x00000000" sfrtype="STM0_TIM1_type" description="Timer Register 1"/>
+		<sfr name="STM2_TIM2" address="0xf0000218" default="0x00000000" sfrtype="STM0_TIM2_type" description="Timer Register 2"/>
+		<sfr name="STM2_TIM3" address="0xf000021c" default="0x00000000" sfrtype="STM0_TIM3_type" description="Timer Register 3"/>
+		<sfr name="STM2_TIM4" address="0xf0000220" default="0x00000000" sfrtype="STM0_TIM4_type" description="Timer Register 4"/>
+		<sfr name="STM2_TIM5" address="0xf0000224" default="0x00000000" sfrtype="STM0_TIM5_type" description="Timer Register 5"/>
+		<sfr name="STM2_TIM6" address="0xf0000228" default="0x00000000" sfrtype="STM0_TIM6_type" description="Timer Register 6"/>
+
+		<sfrtype name="STM0_CAP_type">
+			<bitfield name="STMCAP[63:32]" start="0" end="31" access="r" description="Captured System Timer Bits [63:32]"/>
+		</sfrtype>
+		<sfr name="STM0_CAP" address="0xf000002c" default="0x00000000" sfrtype="STM0_CAP_type" description="Timer Capture Register"/>
+		<sfr name="STM1_CAP" address="0xf000012c" default="0x00000000" sfrtype="STM0_CAP_type" description="Timer Capture Register"/>
+		<sfr name="STM2_CAP" address="0xf000022c" default="0x00000000" sfrtype="STM0_CAP_type" description="Timer Capture Register"/>
+
+		<alias name="SYSTIME_LOW" definition="STM0_TIM0.U"/>
+		<alias name="SYSTIME_HIGH" definition="STM0_CAP.U"/>
+
+		<alias name="SYSTIME0_LOW" definition="STM0_TIM0.U"/>
+		<alias name="SYSTIME0_HIGH" definition="STM0_CAP.U"/>
+		<alias name="SYSTIME1_LOW" definition="STM1_TIM0.U"/>
+		<alias name="SYSTIME1_HIGH" definition="STM1_CAP.U"/>
+		<alias name="SYSTIME2_LOW" definition="STM2_TIM0.U"/>
+		<alias name="SYSTIME2_HIGH" definition="STM2_CAP.U"/>
+ 	</group>
+	<group name="CPU">
+		<sfrtype name="MMU_CON_type">
+			<bitfield name="RES" start="0" end="14" access="r" description="Reserved"/>
+			<bitfield name="NOMMU" start="15" end="15" access="r" description="MMU Exists">
+				<value value="0" description="MMU is available."/>
+				<value value="1" description="MMU is not available. All other bits of MMU_CON are undefined."/>
+			</bitfield>
+			<bitfield name="RES_3" start="16" end="31" access="r" description="Reserved"/>
+		</sfrtype>
+		<sfr name="CPU0_MMU_CON" address="0xf8818000" default="0x00008000" sfrtype="MMU_CON_type" description="MMU Control Register"/>
+		<sfr name="CPU1_MMU_CON" address="0xf8838000" default="0x00008000" sfrtype="MMU_CON_type" description="MMU Control Register"/>
+		<sfr name="CPU2_MMU_CON" address="0xf8858000" default="0x00008000" sfrtype="MMU_CON_type" description="MMU Control Register"/>
+		<sfrtype name="PCXI_type">
+			<bitfield name="PCXO" start="0" end="15" access="rw" description="Previous Context Pointer Offset Field" qualify="__sfrbit32"/>
+			<bitfield name="PCXS" start="16" end="19" access="rw" description="Previous Context Pointer Segment Address" qualify="__sfrbit32"/>
+			<bitfield name="UL" start="20" end="20" access="rw" description="Upper or Lower Context Tag" qualify="__sfrbit32">
+				<value value="0" description="Lower Context"/>
+				<value value="1" description="Upper Context"/>
+			</bitfield>
+			<bitfield name="PIE" start="21" end="21" access="rw" description="Previous Interrupt Enable" qualify="__sfrbit32"/>
+			<bitfield name="PCPN" start="22" end="31" access="rw" description="Previous CPU Priority Number" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_PCXI" address="0xf881fe00" default="0x00000000" sfrtype="PCXI_type" description="Previous Context Information Register"/>
+		<sfr name="CPU1_PCXI" address="0xf883fe00" default="0x00000000" sfrtype="PCXI_type" description="Previous Context Information Register"/>
+		<sfr name="CPU2_PCXI" address="0xf885fe00" default="0x00000000" sfrtype="PCXI_type" description="Previous Context Information Register"/>
+		<sfrtype name="PSW_type">
+			<bitfield name="CDC" start="0" end="6" access="rw" description="Call Depth Counter" qualify="__sfrbit32">
+				<value value="0" description="6-bit counter; trap on overflow"/>
+				<value value="2" description="5-bit counter; trap on overflow"/>
+				<value value="6" description="4-bit counter; trap on overflow"/>
+				<value value="14" description="3-bit counter; trap on overflow"/>
+				<value value="30" description="2-bit counter; trap on overflow"/>
+				<value value="62" description="1-bit counter; trap on overflow"/>
+				<value value="126" description="Trap every call (call trace mode)"/>
+				<value value="127" description="Disable call depth counting"/>
+			</bitfield>
+			<bitfield name="CDE" start="7" end="7" access="rw" description="Call Depth Count Enable" qualify="__sfrbit32">
+				<value value="0" description="Call depth counting is temporarily disabled. It is automatically re-enabled after execution of the next Call instruction."/>
+				<value value="1" description="Call depth counting is enabled."/>
+			</bitfield>
+			<bitfield name="GW" start="8" end="8" access="rw" description="Global Address Register Write Permission" qualify="__sfrbit32">
+				<value value="0" description="Write permission to global registers A[0], A[1], A[8], A[9] is disabled."/>
+				<value value="1" description="Write permission to global registers A[0], A[1], A[8], A[9] is enabled."/>
+			</bitfield>
+			<bitfield name="IS" start="9" end="9" access="rw" description="Interrupt Stack Control" qualify="__sfrbit32">
+				<value value="0" description="User Stack. If an interrupt is taken when the IS bit is 0, then the stack pointer register is loaded from the ISP register before execution starts at the first instruction of the Interrupt Service Routine (ISR)."/>
+				<value value="1" description="Shared Global Stack. If an interrupt is taken when the PSW.IS bit is 1, then the current value of the stack pointer is used by the Interrupt Service Routine (ISR)."/>
+			</bitfield>
+			<bitfield name="IO" start="10" end="11" access="rw" description="Access Privilege Level Control (I/O Privilege)" qualify="__sfrbit32">
+				<value value="0" description="User-0 Mode No peripheral access. Access to memory regions with the peripheral space attribute are prohibited and results in a PSE or MPP trap. This access level is given to tasks that need not directly access peripheral devices. Tasks at this level do not have permission to enable or disable interrupts."/>
+				<value value="1" description="User-1 Mode Regular peripheral access. Enables access to common peripheral devices that are not specially protected, including read/write access to serial I/O ports, read access to timers, and access to most I/O status registers. Tasks at this level may disable interrupts."/>
+				<value value="2" description="Supervisor Mode Enables access to all peripheral devices. It enables read/write access to core registers and protected peripheral devices. Tasks at this level may disable interrupts."/>
+				<value value="3" description="Reserved"/>
+			</bitfield>
+			<bitfield name="PRS" start="12" end="13" access="rw" description="Protection Register Set" qualify="__sfrbit32">
+				<value value="0" description="Protection Register Set 0."/>
+				<value value="1" description="Protection Register Set 1."/>
+				<value value="2" description="Protection Register Set 2."/>
+				<value value="3" description="Protection Register Set 3."/>
+			</bitfield>
+			<bitfield name="S" start="14" end="14" access="rw" description="Safe Task Identifier" qualify="__sfrbit32"/>
+			<bitfield name="RES" start="15" end="26" access="r" description="Reserved" qualify="__sfrbit32"/>
+			<bitfield name="SAV" start="27" end="27" access="rw" description="Sticky Advance Overflow Flag" qualify="__sfrbit32"/>
+			<bitfield name="AV" start="28" end="28" access="rw" description="Advance Overflow Flag" qualify="__sfrbit32"/>
+			<bitfield name="SV" start="29" end="29" access="rw" description="Sticky Overflow Flag" qualify="__sfrbit32"/>
+			<bitfield name="V" start="30" end="30" access="rw" description="Overflow Flag" qualify="__sfrbit32"/>
+			<bitfield name="C" start="31" end="31" access="rw" description="Carry Flag" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_PSW" address="0xf881fe04" default="0x00000B80" sfrtype="PSW_type" description="Program Status Word"/>
+		<sfr name="CPU1_PSW" address="0xf883fe04" default="0x00000B80" sfrtype="PSW_type" description="Program Status Word"/>
+		<sfr name="CPU2_PSW" address="0xf885fe04" default="0x00000B80" sfrtype="PSW_type" description="Program Status Word"/>
+		<sfrtype name="PC_type">
+			<bitfield name="RES" start="0" end="0" access="r" description="Reserved" qualify="__sfrbit32"/>
+			<bitfield name="bPC" start="1" end="31" access="r" description="Program Counter" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_PC" address="0xf881fe08" default="0x00000000" sfrtype="PC_type" description="Program Counter"/>
+		<sfr name="CPU1_PC" address="0xf883fe08" default="0x00000000" sfrtype="PC_type" description="Program Counter"/>
+		<sfr name="CPU2_PC" address="0xf885fe08" default="0x00000000" sfrtype="PC_type" description="Program Counter"/>
+		<sfrtype name="SYSCON_type">
+			<bitfield name="FCDSF" start="0" end="0" access="rw" description="Free Context List Depleted Sticky Flag" qualify="__sfrbit32">
+				<value value="0" description="No FCD trap occurred since the last clear."/>
+				<value value="1" description="An FCD trap occurred since the last clear."/>
+			</bitfield>
+			<bitfield name="PROTEN" start="1" end="1" access="rw" description="Memory Protection Enable" qualify="__sfrbit32">
+				<value value="0" description="Memory Protection is disabled."/>
+				<value value="1" description="Memory Protection is enabled."/>
+			</bitfield>
+			<bitfield name="TPROTEN" start="2" end="2" access="rw" description="Temporal Protection Enable" qualify="__sfrbit32">
+				<value value="0" description="Temporal Protection is disabled."/>
+				<value value="1" description="Temporal Protection is enabled."/>
+			</bitfield>
+			<bitfield name="IS" start="3" end="3" access="rw" description="Initial State" qualify="__sfrbit32"/>
+			<bitfield name="IT" start="4" end="4" access="rw" description="Initial State" qualify="__sfrbit32"/>
+			<bitfield name="RES" start="5" end="31" access="r" description="Reserved" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_SYSCON" address="0xf881fe14" default="0x00000000" sfrtype="SYSCON_type" description="System Configuration Register"/>
+		<sfr name="CPU1_SYSCON" address="0xf883fe14" default="0x00000000" sfrtype="SYSCON_type" description="System Configuration Register"/>
+		<sfr name="CPU2_SYSCON" address="0xf885fe14" default="0x00000000" sfrtype="SYSCON_type" description="System Configuration Register"/>
+		<sfrtype name="CORE_ID_type">
+			<bitfield name="bCORE_ID" start="0" end="2" access="rw" description="Core Identification Number" qualify="__sfrbit32"/>
+			<bitfield name="RES" start="3" end="31" access="r" description="Reserved" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_CORE_ID" address="0xf881fe1c" default="0x00000000" sfrtype="CORE_ID_type" description="Core Identification Register"/>
+		<sfr name="CPU1_CORE_ID" address="0xf883fe1c" default="0x00000000" sfrtype="CORE_ID_type" description="Core Identification Register"/>
+		<sfr name="CPU2_CORE_ID" address="0xf885fe1c" default="0x00000000" sfrtype="CORE_ID_type" description="Core Identification Register"/>
+		<sfrtype name="CPU_ID_type">
+			<bitfield name="MOD_REV" start="0" end="7" access="r" description="Revision Number" qualify="__sfrbit32">
+				<value value="18" description="Reset value"/>
+			</bitfield>
+			<bitfield name="MOD_32B" start="8" end="15" access="r" description="32-Bit Module Enable" qualify="__sfrbit32">
+				<value value="192" description="A value of C0H in this field indicates a 32-bit module with a 32-bit module ID register."/>
+			</bitfield>
+			<bitfield name="MOD" start="16" end="31" access="r" description="Module Identification Number" qualify="__sfrbit32">
+				<value value="192" description="For module identification."/>
+			</bitfield>
+		</sfrtype>
+		<sfr name="CPU0_CPU_ID" address="0xf881fe18" default="0x00C0C010" sfrtype="CPU_ID_type" description="CPU Identification Register"/>
+		<sfr name="CPU1_CPU_ID" address="0xf883fe18" default="0x00C0C010" sfrtype="CPU_ID_type" description="CPU Identification Register"/>
+		<sfr name="CPU2_CPU_ID" address="0xf885fe18" default="0x00C0C010" sfrtype="CPU_ID_type" description="CPU Identification Register"/>
+		<sfrtype name="BIV_type">
+			<bitfield name="VSS" start="0" end="0" access="rw" description="Vector Spacing Select" qualify="__sfrbit32"/>
+			<bitfield name="bBIV" start="1" end="31" access="rw" description="Base Address of Interrupt Vector Table" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_BIV" address="0xf881fe20" default="0x00000000" sfrtype="BIV_type" description="Base Interrupt Vector Table Pointer"/>
+		<sfr name="CPU1_BIV" address="0xf883fe20" default="0x00000000" sfrtype="BIV_type" description="Base Interrupt Vector Table Pointer"/>
+		<sfr name="CPU2_BIV" address="0xf885fe20" default="0x00000000" sfrtype="BIV_type" description="Base Interrupt Vector Table Pointer"/>
+		<sfrtype name="BTV_type">
+			<bitfield name="RES" start="0" end="0" access="r" description="Reserved" qualify="__sfrbit32"/>
+			<bitfield name="bBTV" start="1" end="31" access="rw" description="Base Address of Trap Vector Table" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_BTV" address="0xf881fe24" default="0xA0000100" sfrtype="BTV_type" description="Base Trap Vector Table Pointer"/>
+		<sfr name="CPU1_BTV" address="0xf883fe24" default="0xA0000100" sfrtype="BTV_type" description="Base Trap Vector Table Pointer"/>
+		<sfr name="CPU2_BTV" address="0xf885fe24" default="0xA0000100" sfrtype="BTV_type" description="Base Trap Vector Table Pointer"/>
+		<sfrtype name="ICR_type">
+			<bitfield name="CCPN" start="0" end="9" access="rw" description="Current CPU Priority Number" qualify="__sfrbit32"/>
+			<bitfield name="RES" start="10" end="14" access="r" description="Reserved" qualify="__sfrbit32"/>
+			<bitfield name="IE" start="15" end="15" access="rw" description="Global Interrupt Enable Bit" qualify="__sfrbit32">
+				<value value="0" description="Interrupt system is globally disabled"/>
+				<value value="1" description="Interrupt system is globally enabled"/>
+			</bitfield>
+			<bitfield name="PIPN" start="16" end="25" access="r" description="Pending Interrupt Priority Number" qualify="__sfrbit32">
+				<value value="0" description="No valid pending request."/>
+				<value value="1" description="Request pending, lowest priority."/>
+				<value value="255" description="Request pending, highest priority."/>
+			</bitfield>
+			<bitfield name="RES_5" start="26" end="31" access="r" description="Reserved" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_ICR" address="0xf881fe2c" default="0x00000000" sfrtype="ICR_type" description="Interrupt Control Register"/>
+		<sfr name="CPU1_ICR" address="0xf883fe2c" default="0x00000000" sfrtype="ICR_type" description="Interrupt Control Register"/>
+		<sfr name="CPU2_ICR" address="0xf885fe2c" default="0x00000000" sfrtype="ICR_type" description="Interrupt Control Register"/>
+		<sfrtype name="ISP_type">
+			<bitfield name="bISP" start="0" end="31" access="rw" description="Interrupt Stack Pointer" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_ISP" address="0xf881fe28" default="0x00000100" sfrtype="ISP_type" description="Interrupt Stack Pointer"/>
+		<sfr name="CPU1_ISP" address="0xf883fe28" default="0x00000100" sfrtype="ISP_type" description="Interrupt Stack Pointer"/>
+		<sfr name="CPU2_ISP" address="0xf885fe28" default="0x00000100" sfrtype="ISP_type" description="Interrupt Stack Pointer"/>
+		<sfrtype name="FCX_type">
+			<bitfield name="FCXO" start="0" end="15" access="rw" description="FCX Offset Address Field" qualify="__sfrbit32"/>
+			<bitfield name="FCXS" start="16" end="19" access="rw" description="FCX Segment Address Field" qualify="__sfrbit32"/>
+			<bitfield name="RES" start="20" end="31" access="r" description="Reserved" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_FCX" address="0xf881fe38" default="0x00000000" sfrtype="FCX_type" description="Free CSA List Head Pointer"/>
+		<sfr name="CPU1_FCX" address="0xf883fe38" default="0x00000000" sfrtype="FCX_type" description="Free CSA List Head Pointer"/>
+		<sfr name="CPU2_FCX" address="0xf885fe38" default="0x00000000" sfrtype="FCX_type" description="Free CSA List Head Pointer"/>
+		<sfrtype name="LCX_type">
+			<bitfield name="LCXO" start="0" end="15" access="rw" description="LCX Offset Field" qualify="__sfrbit32"/>
+			<bitfield name="LCXS" start="16" end="19" access="rw" description="LCX Segment Address" qualify="__sfrbit32"/>
+			<bitfield name="RES" start="20" end="31" access="r" description="Reserved" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_LCX" address="0xf881fe3c" default="0x00000000" sfrtype="LCX_type" description="Free CSA List Limit Pointer"/>
+		<sfr name="CPU1_LCX" address="0xf883fe3c" default="0x00000000" sfrtype="LCX_type" description="Free CSA List Limit Pointer"/>
+		<sfr name="CPU2_LCX" address="0xf885fe3c" default="0x00000000" sfrtype="LCX_type" description="Free CSA List Limit Pointer"/>
+		<sfrtype name="PMA0_type">
+			<bitfield name="DAC" start="0" end="9" access="rw" description="Data Access Cacheability Segments 9H-0H" qualify="__sfrbit32"/>
+			<bitfield name="DAC_2" start="10" end="10" access="r" description="Data Access Cacheability Segments AH" qualify="__sfrbit32"/>
+			<bitfield name="DAC_3" start="11" end="12" access="rw" description="Data Access Cacheability Segments CH,BH" qualify="__sfrbit32"/>
+			<bitfield name="DAC_4" start="13" end="15" access="r" description="Data Access Cacheability Segments FH,EH,DH" qualify="__sfrbit32"/>
+			<bitfield name="RES" start="16" end="31" access="r" description="Reserved" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_PMA0" address="0xf881801c" default="0x00000300" sfrtype="PMA0_type" description="Data Access CacheabilityRegister"/>
+		<sfr name="CPU1_PMA0" address="0xf883801c" default="0x00000300" sfrtype="PMA0_type" description="Data Access CacheabilityRegister"/>
+		<sfr name="CPU2_PMA0" address="0xf885801c" default="0x00000300" sfrtype="PMA0_type" description="Data Access CacheabilityRegister"/>
+		<sfrtype name="COMPAT_type">
+			<bitfield name="RES" start="0" end="2" access="r" description="Reserved" qualify="__sfrbit32"/>
+			<bitfield name="RM" start="3" end="3" access="rw" description="Rounding Mode Compatibility" qualify="__sfrbit32">
+				<value value="0" description="PSW.RM not restored by RET."/>
+				<value value="1" description="PSW.RM restored by RET (TC1.3 behavior)."/>
+			</bitfield>
+			<bitfield name="SP" start="4" end="4" access="rw" description="SYSCON Safety Protection Mode Compatibility" qualify="__sfrbit32">
+				<value value="0" description="SYSCON[31:1] safety endinit protected."/>
+				<value value="1" description="SYSCON[31:1] not safety endinit protected (TC1.3 behavior)."/>
+			</bitfield>
+			<bitfield name="RES_4" start="5" end="31" access="r" description="Reserved" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_COMPAT" address="0xf8819400" default="0xFFFFFFFF" sfrtype="COMPAT_type" description="Compatibility Control Register"/>
+		<sfr name="CPU1_COMPAT" address="0xf8839400" default="0xFFFFFFFF" sfrtype="COMPAT_type" description="Compatibility Control Register"/>
+		<sfr name="CPU2_COMPAT" address="0xf8859400" default="0xFFFFFFFF" sfrtype="COMPAT_type" description="Compatibility Control Register"/>
+<!-- Warning: SFR 'DBGSR_type' BITFIELD at 9 'RES' duplicate at 5; renamed to 'RES_9' -->
+		<sfrtype name="DBGSR_type">
+			<bitfield name="DE" start="0" end="0" access="r" description="Debug Enable" qualify="__sfrbit32">
+				<value value="0" description="The CDC is disabled."/>
+				<value value="1" description="The CDC is enabled."/>
+			</bitfield>
+			<bitfield name="HALT" start="1" end="2" access="rw" description="CPU Halt Request / Status Field" qualify="__sfrbit32">
+				<value value="0" description="R: CPU running. W: HALT[0] unchanged."/>
+				<value value="1" description="R: CPU halted. W: HALT[0] unchanged."/>
+				<value value="2" description="R: Not Applicable. W: reset HALT[0]."/>
+				<value value="3" description="R: Not Applicable. W: If DBGSR.DE==1 (The CDC is enabled), set HALT[0]. If DBGSR.DE==0 (The CDC is not enabled), HALT[0] is left unchanged."/>
+			</bitfield>
+			<bitfield name="SIH" start="3" end="3" access="r" description="Suspend-in Halt" qualify="__sfrbit32">
+				<value value="0" description="The Suspend-In signal is negated. The CPU is not in Halt Mode, (except when the Halt mechanism is set following a Debug Event or a write to DBGSR.HALT)."/>
+				<value value="1" description="The Suspend-In signal is asserted. The CPU is in Halt Mode."/>
+			</bitfield>
+			<bitfield name="SUSP" start="4" end="4" access="rw" description="Current State of the Core Suspend-Out Signal" qualify="__sfrbit32">
+				<value value="0" description="Core suspend-out inactive."/>
+				<value value="1" description="Core suspend-out active."/>
+			</bitfield>
+			<bitfield name="RES" start="5" end="5" access="r" description="Reserved" qualify="__sfrbit32"/>
+			<bitfield name="PREVSUSP" start="6" end="6" access="r" description="Previous State of Core Suspend-Out Signal" qualify="__sfrbit32">
+				<value value="0" description="Previous core suspend-out inactive."/>
+				<value value="1" description="Previous core suspend-out active."/>
+			</bitfield>
+			<bitfield name="PEVT" start="7" end="7" access="rw" description="Posted Event" qualify="__sfrbit32">
+				<value value="0" description="No posted event."/>
+				<value value="1" description="Posted event."/>
+			</bitfield>
+			<bitfield name="EVTSRC" start="8" end="12" access="r" description="Event Source" qualify="__sfrbit32">
+				<value value="0" description="EXEVT."/>
+				<value value="1" description="CREVT."/>
+				<value value="2" description="SWEVT."/>
+				<value value="16" description="16 + n TRnEVT (n = 0, 7)."/>
+			</bitfield>
+			<bitfield name="RES_9" start="13" end="31" access="r" description="Reserved" qualify="__sfrbit32"/>
+		</sfrtype>
+		<sfr name="CPU0_DBGSR" address="0xf881fd00" default="0x00000000" sfrtype="DBGSR_type" description="Debug Status Register"/>
+		<sfr name="CPU1_DBGSR" address="0xf883fd00" default="0x00000000" sfrtype="DBGSR_type" description="Debug Status Register"/>
+		<sfr name="CPU2_DBGSR" address="0xf885fd00" default="0x00000000" sfrtype="DBGSR_type" description="Debug Status Register"/>
+ 	</group>
+</sfrfile>

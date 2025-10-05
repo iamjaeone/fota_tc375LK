@@ -1,0 +1,518 @@
+/**************************************************************************
+**
+** Version: @(#)reguserdef16x.xml	1.4 11/11/22
+** 
+** This file contains all Core-SFR and BIT names and on-chip register definitions
+** 
+** Copyright 2002-2009 TASKING BV
+**
+**************************************************************************/
+#ifndef _REGUSERDEF16X_H
+#define _REGUSERDEF16X_H
+
+/* Core Base */
+#define core_base	0xf881	/* The base address off the memory for the CSFR's core 0 */
+#define core_base_0	0xf881	/* The base address off the memory for the CSFR's core 0 */
+#define core_base_1	0xf883	/* The base address off the memory for the CSFR's core 1 */
+#define core_base_2	0xf885	/* The base address off the memory for the CSFR's core 2 */
+
+/* Core Special Function Registers (CSFR). Macros, such as MMU_CON, that expand to a 16-bit number do not directly represent a memory address.
+   They are intended to be used with the intrinsic functions __mfcr(...) and __mtcr(...). */
+#define MMU_CON	0x8000	/* MMU Control Register */
+#define PCXI	0xfe00	/* Previous Context Information Register */
+#define PSW	0xfe04	/* Program Status Word */
+#define PC	0xfe08	/* Program Counter */
+#define SYSCON	0xfe14	/* System Configuration Register */
+#define CORE_ID	0xfe1c	/* Core Identification Register */
+#define CPU_ID	0xfe18	/* CPU Identification Register */
+#define BIV	0xfe20	/* Base Interrupt Vector Table Pointer */
+#define BTV	0xfe24	/* Base Trap Vector Table Pointer */
+#define ISP	0xfe28	/* Interrupt Stack Pointer */
+#define ICR	0xfe2c	/* Interrupt Control Register */
+#define FCX	0xfe38	/* Free CSA List Head Pointer */
+#define LCX	0xfe3c	/* Free CSA List Limit Pointer */
+#define PMA0	0x801c	/* Physical Memory Attributes */
+#define COMPAT	0x9400	/* Compatibility Control Register */
+
+/* SCU */
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 ENDINIT        : 1;	/* End-of-Initialization Control Bit */
+		unsigned __sfrbit32 LCK            : 1;	/* Lock Bit to Control Access to WDTxCON0 */
+		unsigned __sfrbit32 HPW0           : 2;	/* Hardware Password 0 */
+		unsigned __sfrbit32 HPW1           : 4;	/* Hardware Password 1 */
+		unsigned __sfrbit32 PW             : 8;	/* User-Definable Password Field for Access to WDTxCON0 */
+		unsigned __sfrbit32 REL            : 16;	/* Reload Value for the WDT */
+	} B;
+	int I;
+	unsigned int U;
+
+} SCU_WDTCPU0CON0_type;
+#define SCU_WDTCPU0CON0	(*( SCU_WDTCPU0CON0_type *) 0xf0036100u)	/* CPU0 WDT Control Register 0 */
+#define SCU_WDTCPU1CON0	(*( SCU_WDTCPU0CON0_type *) 0xf003610cu)	/* CPU1 WDT Control Register 0 */
+#define SCU_WDTCPU2CON0	(*( SCU_WDTCPU0CON0_type *) 0xf0036118u)	/* CPU2 WDT Control Register 0 */
+#define SCU_WDTSCON0	(*( SCU_WDTCPU0CON0_type *) 0xf00360f0u)	/* Safety WDT Control Register 0 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned int                : 2;
+		unsigned int IR             : 1;	/* Input Frequency Request Control Bit */
+		unsigned int DR             : 1;	/* Disable Request Control Bit */
+		unsigned int                : 2;
+		unsigned int UR             : 1;	/* Unlock Restriction Request Control Bit */
+		unsigned int                : 25;
+	} B;
+	int I;
+	unsigned int U;
+
+} SCU_WDTCPU0CON1_type;
+#define SCU_WDTCPU0CON1	(*( SCU_WDTCPU0CON1_type *) 0xf0036104u)	/* CPU0 WDT Control Register 1 */
+#define SCU_WDTCPU1CON1	(*( SCU_WDTCPU0CON1_type *) 0xf0036110u)	/* CPU1 WDT Control Register 1 */
+#define SCU_WDTCPU2CON1	(*( SCU_WDTCPU0CON1_type *) 0xf003611cu)	/* CPU2 WDT Control Register 1 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int AE             : 1;	/* Watchdog Access Error Status Flag */
+		/* const */ unsigned int OE             : 1;	/* Watchdog Overflow Error Status Flag */
+		/* const */ unsigned int IS             : 1;	/* Watchdog Input Clock Status Flag */
+		/* const */ unsigned int DS             : 1;	/* Watchdog Enable/Disable Status Flag */
+		/* const */ unsigned int TO             : 1;	/* Watchdog Time-Out Mode Flag */
+		/* const */ unsigned int                : 1;
+		/* const */ unsigned int US             : 1;	/* SMU Unlock Restriction Status Flag */
+		/* const */ unsigned int                : 9;
+		/* const */ unsigned int TIM            : 16;	/* Timer Value */
+	} B;
+	int I;
+	unsigned int U;
+
+} SCU_WDTCPU0SR_type;
+#define SCU_WDTCPU0SR	(*( SCU_WDTCPU0SR_type *) 0xf0036108u)	/* CPU0 WDT Status Register */
+#define SCU_WDTCPU1SR	(*( SCU_WDTCPU0SR_type *) 0xf0036114u)	/* CPU1 WDT Status Register */
+#define SCU_WDTCPU2SR	(*( SCU_WDTCPU0SR_type *) 0xf0036120u)	/* CPU2 WDT Status Register */
+#define SCU_WDTSSR	(*( SCU_WDTCPU0SR_type *) 0xf00360f8u)	/* Safety WDT Status Register */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned int CLRIRF         : 1;	/* Clear Internal Reset Flag */
+		unsigned int                : 1;
+		unsigned int IR             : 1;	/* Input Frequency Request Control Bit */
+		unsigned int DR             : 1;	/* Disable Request Control Bit */
+		unsigned int                : 2;
+		unsigned int UR             : 1;	/* Unlock Restriction Request Control Bit */
+		unsigned int                : 25;
+	} B;
+	int I;
+	unsigned int U;
+
+} SCU_WDTSCON1_type;
+#define SCU_WDTSCON1	(*( SCU_WDTSCON1_type *) 0xf00360f4u)	/* Safety WDT Control Register 1 */
+
+
+/* System Timer (STM) */
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int STM_31_0_      : 32;	/* System Timer Bits [31:0] */
+	} B;
+	int I;
+	unsigned int U;
+
+} STM0_TIM0_type;
+#define STM0_TIM0	(*( STM0_TIM0_type *) 0xf0000010u)	/* Timer Register 0 */
+#define STM1_TIM0	(*( STM0_TIM0_type *) 0xf0000110u)	/* Timer Register 0 */
+#define STM2_TIM0	(*( STM0_TIM0_type *) 0xf0000210u)	/* Timer Register 0 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int STM_35_4_      : 32;	/* System Timer Bits [35:4] */
+	} B;
+	int I;
+	unsigned int U;
+
+} STM0_TIM1_type;
+#define STM0_TIM1	(*( STM0_TIM1_type *) 0xf0000014u)	/* Timer Register 1 */
+#define STM1_TIM1	(*( STM0_TIM1_type *) 0xf0000114u)	/* Timer Register 1 */
+#define STM2_TIM1	(*( STM0_TIM1_type *) 0xf0000214u)	/* Timer Register 1 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int STM_39_8_      : 32;	/* System Timer Bits [39:8] */
+	} B;
+	int I;
+	unsigned int U;
+
+} STM0_TIM2_type;
+#define STM0_TIM2	(*( STM0_TIM2_type *) 0xf0000018u)	/* Timer Register 2 */
+#define STM1_TIM2	(*( STM0_TIM2_type *) 0xf0000118u)	/* Timer Register 2 */
+#define STM2_TIM2	(*( STM0_TIM2_type *) 0xf0000218u)	/* Timer Register 2 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int STM_43_12_     : 32;	/* System Timer Bits [43:12] */
+	} B;
+	int I;
+	unsigned int U;
+
+} STM0_TIM3_type;
+#define STM0_TIM3	(*( STM0_TIM3_type *) 0xf000001cu)	/* Timer Register 3 */
+#define STM1_TIM3	(*( STM0_TIM3_type *) 0xf000011cu)	/* Timer Register 3 */
+#define STM2_TIM3	(*( STM0_TIM3_type *) 0xf000021cu)	/* Timer Register 3 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int STM_47_16_     : 32;	/* System Timer Bits [47:16] */
+	} B;
+	int I;
+	unsigned int U;
+
+} STM0_TIM4_type;
+#define STM0_TIM4	(*( STM0_TIM4_type *) 0xf0000020u)	/* Timer Register 4 */
+#define STM1_TIM4	(*( STM0_TIM4_type *) 0xf0000120u)	/* Timer Register 4 */
+#define STM2_TIM4	(*( STM0_TIM4_type *) 0xf0000220u)	/* Timer Register 4 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int STM_51_20_     : 32;	/* System Timer Bits [51:20] */
+	} B;
+	int I;
+	unsigned int U;
+
+} STM0_TIM5_type;
+#define STM0_TIM5	(*( STM0_TIM5_type *) 0xf0000024u)	/* Timer Register 5 */
+#define STM1_TIM5	(*( STM0_TIM5_type *) 0xf0000124u)	/* Timer Register 5 */
+#define STM2_TIM5	(*( STM0_TIM5_type *) 0xf0000224u)	/* Timer Register 5 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int STM_63_32_     : 32;	/* System Timer Bits [63:32] */
+	} B;
+	int I;
+	unsigned int U;
+
+} STM0_TIM6_type;
+#define STM0_TIM6	(*( STM0_TIM6_type *) 0xf0000028u)	/* Timer Register 6 */
+#define STM1_TIM6	(*( STM0_TIM6_type *) 0xf0000128u)	/* Timer Register 6 */
+#define STM2_TIM6	(*( STM0_TIM6_type *) 0xf0000228u)	/* Timer Register 6 */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int STMCAP_63_32_  : 32;	/* Captured System Timer Bits [63:32] */
+	} B;
+	int I;
+	unsigned int U;
+
+} STM0_CAP_type;
+#define STM0_CAP	(*( STM0_CAP_type *) 0xf000002cu)	/* Timer Capture Register */
+#define STM1_CAP	(*( STM0_CAP_type *) 0xf000012cu)	/* Timer Capture Register */
+#define STM2_CAP	(*( STM0_CAP_type *) 0xf000022cu)	/* Timer Capture Register */
+
+#define SYSTIME_LOW	STM0_TIM0.U
+#define SYSTIME_HIGH	STM0_CAP.U
+#define SYSTIME0_LOW	STM0_TIM0.U
+#define SYSTIME0_HIGH	STM0_CAP.U
+#define SYSTIME1_LOW	STM1_TIM0.U
+#define SYSTIME1_HIGH	STM1_CAP.U
+#define SYSTIME2_LOW	STM2_TIM0.U
+#define SYSTIME2_HIGH	STM2_CAP.U
+
+/* CPU */
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned int RES            : 15;	/* Reserved */
+		/* const */ unsigned int NOMMU          : 1;	/* MMU Exists */
+		/* const */ unsigned int RES_3          : 16;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} MMU_CON_type;
+#define CPU0_MMU_CON	(*( MMU_CON_type *) 0xf8818000u)	/* MMU Control Register */
+#define CPU1_MMU_CON	(*( MMU_CON_type *) 0xf8838000u)	/* MMU Control Register */
+#define CPU2_MMU_CON	(*( MMU_CON_type *) 0xf8858000u)	/* MMU Control Register */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 PCXO           : 16;	/* Previous Context Pointer Offset Field */
+		unsigned __sfrbit32 PCXS           : 4;	/* Previous Context Pointer Segment Address */
+		unsigned __sfrbit32 UL             : 1;	/* Upper or Lower Context Tag */
+		unsigned __sfrbit32 PIE            : 1;	/* Previous Interrupt Enable */
+		unsigned __sfrbit32 PCPN           : 10;	/* Previous CPU Priority Number */
+	} B;
+	int I;
+	unsigned int U;
+
+} PCXI_type;
+#define CPU0_PCXI	(*( PCXI_type *) 0xf881fe00u)	/* Previous Context Information Register */
+#define CPU1_PCXI	(*( PCXI_type *) 0xf883fe00u)	/* Previous Context Information Register */
+#define CPU2_PCXI	(*( PCXI_type *) 0xf885fe00u)	/* Previous Context Information Register */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 CDC            : 7;	/* Call Depth Counter */
+		unsigned __sfrbit32 CDE            : 1;	/* Call Depth Count Enable */
+		unsigned __sfrbit32 GW             : 1;	/* Global Address Register Write Permission */
+		unsigned __sfrbit32 IS             : 1;	/* Interrupt Stack Control */
+		unsigned __sfrbit32 IO             : 2;	/* Access Privilege Level Control (I/O Privilege) */
+		unsigned __sfrbit32 PRS            : 2;	/* Protection Register Set */
+		unsigned __sfrbit32 S              : 1;	/* Safe Task Identifier */
+		/* const */ unsigned __sfrbit32 RES            : 12;	/* Reserved */
+		unsigned __sfrbit32 SAV            : 1;	/* Sticky Advance Overflow Flag */
+		unsigned __sfrbit32 AV             : 1;	/* Advance Overflow Flag */
+		unsigned __sfrbit32 SV             : 1;	/* Sticky Overflow Flag */
+		unsigned __sfrbit32 V              : 1;	/* Overflow Flag */
+		unsigned __sfrbit32 C              : 1;	/* Carry Flag */
+	} B;
+	int I;
+	unsigned int U;
+
+} PSW_type;
+#define CPU0_PSW	(*( PSW_type *) 0xf881fe04u)	/* Program Status Word */
+#define CPU1_PSW	(*( PSW_type *) 0xf883fe04u)	/* Program Status Word */
+#define CPU2_PSW	(*( PSW_type *) 0xf885fe04u)	/* Program Status Word */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned __sfrbit32 RES            : 1;	/* Reserved */
+		/* const */ unsigned __sfrbit32 bPC            : 31;	/* Program Counter */
+	} B;
+	int I;
+	unsigned int U;
+
+} PC_type;
+#define CPU0_PC	(*( PC_type *) 0xf881fe08u)	/* Program Counter */
+#define CPU1_PC	(*( PC_type *) 0xf883fe08u)	/* Program Counter */
+#define CPU2_PC	(*( PC_type *) 0xf885fe08u)	/* Program Counter */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 FCDSF          : 1;	/* Free Context List Depleted Sticky Flag */
+		unsigned __sfrbit32 PROTEN         : 1;	/* Memory Protection Enable */
+		unsigned __sfrbit32 TPROTEN        : 1;	/* Temporal Protection Enable */
+		unsigned __sfrbit32 IS             : 1;	/* Initial State */
+		unsigned __sfrbit32 IT             : 1;	/* Initial State */
+		/* const */ unsigned __sfrbit32 RES            : 27;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} SYSCON_type;
+#define CPU0_SYSCON	(*( SYSCON_type *) 0xf881fe14u)	/* System Configuration Register */
+#define CPU1_SYSCON	(*( SYSCON_type *) 0xf883fe14u)	/* System Configuration Register */
+#define CPU2_SYSCON	(*( SYSCON_type *) 0xf885fe14u)	/* System Configuration Register */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 bCORE_ID       : 3;	/* Core Identification Number */
+		/* const */ unsigned __sfrbit32 RES            : 29;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} CORE_ID_type;
+#define CPU0_CORE_ID	(*( CORE_ID_type *) 0xf881fe1cu)	/* Core Identification Register */
+#define CPU1_CORE_ID	(*( CORE_ID_type *) 0xf883fe1cu)	/* Core Identification Register */
+#define CPU2_CORE_ID	(*( CORE_ID_type *) 0xf885fe1cu)	/* Core Identification Register */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned __sfrbit32 MOD_REV        : 8;	/* Revision Number */
+		/* const */ unsigned __sfrbit32 MOD_32B        : 8;	/* 32-Bit Module Enable */
+		/* const */ unsigned __sfrbit32 MOD            : 16;	/* Module Identification Number */
+	} B;
+	int I;
+	unsigned int U;
+
+} CPU_ID_type;
+#define CPU0_CPU_ID	(*( CPU_ID_type *) 0xf881fe18u)	/* CPU Identification Register */
+#define CPU1_CPU_ID	(*( CPU_ID_type *) 0xf883fe18u)	/* CPU Identification Register */
+#define CPU2_CPU_ID	(*( CPU_ID_type *) 0xf885fe18u)	/* CPU Identification Register */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 VSS            : 1;	/* Vector Spacing Select */
+		unsigned __sfrbit32 bBIV           : 31;	/* Base Address of Interrupt Vector Table */
+	} B;
+	int I;
+	unsigned int U;
+
+} BIV_type;
+#define CPU0_BIV	(*( BIV_type *) 0xf881fe20u)	/* Base Interrupt Vector Table Pointer */
+#define CPU1_BIV	(*( BIV_type *) 0xf883fe20u)	/* Base Interrupt Vector Table Pointer */
+#define CPU2_BIV	(*( BIV_type *) 0xf885fe20u)	/* Base Interrupt Vector Table Pointer */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned __sfrbit32 RES            : 1;	/* Reserved */
+		unsigned __sfrbit32 bBTV           : 31;	/* Base Address of Trap Vector Table */
+	} B;
+	int I;
+	unsigned int U;
+
+} BTV_type;
+#define CPU0_BTV	(*( BTV_type *) 0xf881fe24u)	/* Base Trap Vector Table Pointer */
+#define CPU1_BTV	(*( BTV_type *) 0xf883fe24u)	/* Base Trap Vector Table Pointer */
+#define CPU2_BTV	(*( BTV_type *) 0xf885fe24u)	/* Base Trap Vector Table Pointer */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 CCPN           : 10;	/* Current CPU Priority Number */
+		/* const */ unsigned __sfrbit32 RES            : 5;	/* Reserved */
+		unsigned __sfrbit32 IE             : 1;	/* Global Interrupt Enable Bit */
+		/* const */ unsigned __sfrbit32 PIPN           : 10;	/* Pending Interrupt Priority Number */
+		/* const */ unsigned __sfrbit32 RES_5          : 6;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} ICR_type;
+#define CPU0_ICR	(*( ICR_type *) 0xf881fe2cu)	/* Interrupt Control Register */
+#define CPU1_ICR	(*( ICR_type *) 0xf883fe2cu)	/* Interrupt Control Register */
+#define CPU2_ICR	(*( ICR_type *) 0xf885fe2cu)	/* Interrupt Control Register */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 bISP           : 32;	/* Interrupt Stack Pointer */
+	} B;
+	int I;
+	unsigned int U;
+
+} ISP_type;
+#define CPU0_ISP	(*( ISP_type *) 0xf881fe28u)	/* Interrupt Stack Pointer */
+#define CPU1_ISP	(*( ISP_type *) 0xf883fe28u)	/* Interrupt Stack Pointer */
+#define CPU2_ISP	(*( ISP_type *) 0xf885fe28u)	/* Interrupt Stack Pointer */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 FCXO           : 16;	/* FCX Offset Address Field */
+		unsigned __sfrbit32 FCXS           : 4;	/* FCX Segment Address Field */
+		/* const */ unsigned __sfrbit32 RES            : 12;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} FCX_type;
+#define CPU0_FCX	(*( FCX_type *) 0xf881fe38u)	/* Free CSA List Head Pointer */
+#define CPU1_FCX	(*( FCX_type *) 0xf883fe38u)	/* Free CSA List Head Pointer */
+#define CPU2_FCX	(*( FCX_type *) 0xf885fe38u)	/* Free CSA List Head Pointer */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 LCXO           : 16;	/* LCX Offset Field */
+		unsigned __sfrbit32 LCXS           : 4;	/* LCX Segment Address */
+		/* const */ unsigned __sfrbit32 RES            : 12;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} LCX_type;
+#define CPU0_LCX	(*( LCX_type *) 0xf881fe3cu)	/* Free CSA List Limit Pointer */
+#define CPU1_LCX	(*( LCX_type *) 0xf883fe3cu)	/* Free CSA List Limit Pointer */
+#define CPU2_LCX	(*( LCX_type *) 0xf885fe3cu)	/* Free CSA List Limit Pointer */
+
+typedef volatile union
+{
+	struct
+	{ 
+		unsigned __sfrbit32 DAC            : 10;	/* Data Access Cacheability Segments 9H-0H */
+		/* const */ unsigned __sfrbit32 DAC_2          : 1;	/* Data Access Cacheability Segments AH */
+		unsigned __sfrbit32 DAC_3          : 2;	/* Data Access Cacheability Segments CH,BH */
+		/* const */ unsigned __sfrbit32 DAC_4          : 3;	/* Data Access Cacheability Segments FH,EH,DH */
+		/* const */ unsigned __sfrbit32 RES            : 16;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} PMA0_type;
+#define CPU0_PMA0	(*( PMA0_type *) 0xf881801cu)	/* Data Access CacheabilityRegister */
+#define CPU1_PMA0	(*( PMA0_type *) 0xf883801cu)	/* Data Access CacheabilityRegister */
+#define CPU2_PMA0	(*( PMA0_type *) 0xf885801cu)	/* Data Access CacheabilityRegister */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned __sfrbit32 RES            : 3;	/* Reserved */
+		unsigned __sfrbit32 RM             : 1;	/* Rounding Mode Compatibility */
+		unsigned __sfrbit32 SP             : 1;	/* SYSCON Safety Protection Mode Compatibility */
+		/* const */ unsigned __sfrbit32 RES_4          : 27;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} COMPAT_type;
+#define CPU0_COMPAT	(*( COMPAT_type *) 0xf8819400u)	/* Compatibility Control Register */
+#define CPU1_COMPAT	(*( COMPAT_type *) 0xf8839400u)	/* Compatibility Control Register */
+#define CPU2_COMPAT	(*( COMPAT_type *) 0xf8859400u)	/* Compatibility Control Register */
+
+typedef volatile union
+{
+	struct
+	{ 
+		/* const */ unsigned __sfrbit32 DE             : 1;	/* Debug Enable */
+		unsigned __sfrbit32 HALT           : 2;	/* CPU Halt Request / Status Field */
+		/* const */ unsigned __sfrbit32 SIH            : 1;	/* Suspend-in Halt */
+		unsigned __sfrbit32 SUSP           : 1;	/* Current State of the Core Suspend-Out Signal */
+		/* const */ unsigned __sfrbit32 RES            : 1;	/* Reserved */
+		/* const */ unsigned __sfrbit32 PREVSUSP       : 1;	/* Previous State of Core Suspend-Out Signal */
+		unsigned __sfrbit32 PEVT           : 1;	/* Posted Event */
+		/* const */ unsigned __sfrbit32 EVTSRC         : 5;	/* Event Source */
+		/* const */ unsigned __sfrbit32 RES_9          : 19;	/* Reserved */
+	} B;
+	int I;
+	unsigned int U;
+
+} DBGSR_type;
+#define CPU0_DBGSR	(*( DBGSR_type *) 0xf881fd00u)	/* Debug Status Register */
+#define CPU1_DBGSR	(*( DBGSR_type *) 0xf883fd00u)	/* Debug Status Register */
+#define CPU2_DBGSR	(*( DBGSR_type *) 0xf885fd00u)	/* Debug Status Register */
+
+#endif /*_REGUSERDEF16X_H*/

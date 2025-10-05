@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "appA"
+		},
+		{
+			"path": "appB"
+		},
+		{
+			"path": "bootloader"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"multicore.h": "c"
+		}
+	}
+}
