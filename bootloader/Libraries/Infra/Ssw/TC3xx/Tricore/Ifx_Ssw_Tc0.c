@@ -244,6 +244,46 @@ static void __StartUpSoftware_Phase5(void)
 
 static void __StartUpSoftware_Phase6(void)
 {
+    /* Start remaining cores as a daisy-chain */
+#if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) || defined(DEVICE_TC37XED) || defined(DEVICE_TC37X) || defined(DEVICE_TC36X) || defined(DEVICE_TC35X) || defined(DEVICE_TC33XED)
+#if (IFX_CFG_SSW_ENABLE_TRICORE1 != 0)
+    Ifx_Ssw_startCore(&MODULE_CPU1, (unsigned int)__START(1));           /*The status returned by function call is ignored */
+#endif /* #if (IFX_CFG_CPU_CSTART_ENABLE_TRICORE1 != 0) */
+#endif /* #if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) || defined(DEVICE_TC37XED) || defined(DEVICE_TC37X) || defined(DEVICE_TC36X) || defined(DEVICE_TC35X) || defined(DEVICE_TC33XED) */
+
+#if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) || defined(DEVICE_TC37XED) || defined(DEVICE_TC37X) || defined(DEVICE_TC35X)
+#if (IFX_CFG_SSW_ENABLE_TRICORE1 == 0)
+#if (IFX_CFG_SSW_ENABLE_TRICORE2 != 0)
+    Ifx_Ssw_startCore(&MODULE_CPU2, (unsigned int)__START(2));           /*The status returned by function call is ignored */
+#endif /* (IFX_CFG_SSW_ENABLE_TRICORE2 != 0) */
+
+#if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X)
+#if (IFX_CFG_SSW_ENABLE_TRICORE2 == 0)
+#if (IFX_CFG_SSW_ENABLE_TRICORE3 != 0)
+    Ifx_Ssw_startCore(&MODULE_CPU3, (unsigned int)__START(3));           /*The status returned by function call is ignored */
+#endif /* (IFX_CFG_SSW_ENABLE_TRICORE3 != 0) */ 
+
+#if defined(DEVICE_TC39XB)
+#if (IFX_CFG_SSW_ENABLE_TRICORE3 == 0)
+#if (IFX_CFG_SSW_ENABLE_TRICORE4 != 0)
+    Ifx_Ssw_startCore(&MODULE_CPU4, (unsigned int)__START(4));           /*The status returned by function call is ignored */
+#endif /* (IFX_CFG_SSW_ENABLE_TRICORE4 != 0) */
+
+#if (IFX_CFG_SSW_ENABLE_TRICORE4 == 0)
+#if (IFX_CFG_SSW_ENABLE_TRICORE5 != 0)
+    Ifx_Ssw_startCore(&MODULE_CPU5, (unsigned int)__START(5));           /*The status returned by function call is ignored */
+#endif /* (IFX_CFG_SSW_ENABLE_TRICORE5 != 0) */
+#endif /* #if (IFX_CFG_SSW_ENABLE_TRICORE4 == 0) */
+
+#endif /* #if (IFX_CFG_SSW_ENABLE_TRICORE3 == 0) */
+#endif /* #if defined(DEVICE_TC39XB) */
+
+#endif /* #if (IFX_CFG_SSW_ENABLE_TRICORE2 == 0) */
+#endif /* #if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) */
+
+#endif /* #if (IFX_CFG_SSW_ENABLE_TRICORE1 == 0) */
+#endif /* #if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) || defined(DEVICE_TC37XED) || defined(DEVICE_TC37X) || defined(DEVICE_TC35X) */
+
     Ifx_Ssw_jumpToFunction(__Core0_start);
 }
 

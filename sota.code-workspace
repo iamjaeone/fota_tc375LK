@@ -12,7 +12,12 @@
 	],
 	"settings": {
 		"files.associations": {
-			"multicore.h": "c"
+			"multicore.h": "c",
+			"ifx_types.h": "c",
+			"ifxscuwdt.h": "c",
+			"can.h": "c",
+			"ifxcan_can.h": "c",
+			"cantp.h": "c"
 		}
 	}
 }
