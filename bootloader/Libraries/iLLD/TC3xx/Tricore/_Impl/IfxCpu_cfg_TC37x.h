@@ -62,7 +62,8 @@
 
 /** \brief CPU count
  */
-#define IFXCPU_NUM_MODULES            (3)
+// #define IFXCPU_NUM_MODULES            (3)
+#define IFXCPU_NUM_MODULES            (1)
 
 /** \brief Segment number of cachable flash region
  */

@@ -12,7 +12,6 @@
 	],
 	"settings": {
 		"files.associations": {
-			"multicore.h": "c"
 		}
 	}
 }

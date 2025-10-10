@@ -53,9 +53,20 @@
 #define LCF_HEAP0_OFFSET    (LCF_USTACK0_OFFSET - LCF_HEAP_SIZE)
 
 #define LCF_INTVEC0_START 0x8001F000
-#define LCF_TRAPVEC0_START 0x80000100
+#define LCF_INTVEC1_START 0x0
+#define LCF_INTVEC2_START 0x0
+
+#define LCF_TRAPVEC0_START 0x80000020
+#define LCF_TRAPVEC1_START 0x0
+#define LCF_TRAPVEC2_START 0x0
+
 #define LCF_STARTPTR_CPU0 0x80000000
-#define LCF_STARTPTR_NC_CPU0 0xa0000000
+#define LCF_STARTPTR_CPU1 0x0
+#define LCF_STARTPTR_CPU2 0x0
+
+#define LCF_STARTPTR_NC_CPU0 0xA0000000
+#define LCF_STARTPTR_NC_CPU1 0x0
+#define LCF_STARTPTR_NC_CPU2 0x0
 
 #define INTTAB0             (LCF_INTVEC0_START)
 #define TRAPTAB0            (LCF_TRAPVEC0_START)
@@ -120,6 +131,15 @@ derivative tc37
         type = rom;
         map     cached (dest=bus:sri, dest_offset=0x80000000,           size=BOOTLOADER_SIZE);
         map not_cached (dest=bus:sri, dest_offset=0xa0000000, reserved, size=BOOTLOADER_SIZE);
+    }
+
+    memory pfls1
+    {
+        mau = 8;
+        size = 3M;
+        type = reserved rom;
+        map     cached (dest=bus:sri, dest_offset=0x80300000,           size=3M);
+        map not_cached (dest=bus:sri, dest_offset=0xa0300000, reserved, size=3M);
     }
     
     memory dfls0
@@ -237,6 +257,25 @@ derivative tc37
                     select "(.text.traptab_cpu0*)";
                 }
             }
+
+            /*
+            group trapvec_tc1 (align = 8, run_addr=LCF_TRAPVEC1_START)
+            {
+                section "trapvec_tc1" (size=0x100, attributes=rx, fill=0)
+                {
+                    select "(.text.traptab_cpu1*)";
+                }
+            }
+            group trapvec_tc2 (align = 8, run_addr=LCF_TRAPVEC2_START)
+            {
+                section "trapvec_tc2" (size=0x100, attributes=rx, fill=0)
+                {
+                    select "(.text.traptab_cpu2*)";
+                }
+            }
+            */
+            
+
             "__TRAPTAB_CPU0" := TRAPTAB0;
         }
         
@@ -247,6 +286,21 @@ derivative tc37
             {
                 select "(.text.start_cpu0*)";
             }
+            /*
+            group start_tc1 (run_addr=LCF_STARTPTR_NC_CPU1)
+            {
+                section "start_tc1" (size=0x20, attributes=rx, fill=0)
+                {
+                    select "(.text.start_cpu1*)";
+                }
+            }
+            group start_tc2 (run_addr=LCF_STARTPTR_NC_CPU2)
+            {
+                select "(.text.start_cpu2*)";
+            }
+            */
+            
+
             "__ENABLE_INDIVIDUAL_C_INIT_CPU0" := 0; /* Not used */
         }
         
@@ -257,6 +311,16 @@ derivative tc37
             {
 #                include "inttab0.lsl"
             }
+            /*
+            group int_tab_tc1 (ordered)
+            {
+#                include "inttab1.lsl"
+            }
+            group int_tab_tc2 (ordered)
+            {
+#                include "inttab2.lsl"
+            }
+            */
             "_lc_u_int_tab" = (LCF_INTVEC0_START);
             "__INTTAB_CPU0" = (LCF_INTVEC0_START);
         }
@@ -550,6 +614,20 @@ derivative tc37
                     select ".text.CompilerTasking.Ifx_C_Init";
                     select "(.text.text_cpu0|.text.text_cpu0.*)";
                 }
+
+                group (ordered, align = 4, run_addr=mem:pfls0)
+                {
+                    select ".text.Ifx_Ssw_Tc1.*";
+                    select ".text.Cpu1_Main.*";
+                    select "(.text.text_cpu1|.text.text_cpu1.*)";
+                }
+                group (ordered, align = 4, run_addr=mem:pfls0)
+                {
+                    select ".text.Ifx_Ssw_Tc2.*";
+                    select ".text.Cpu2_Main.*";
+                    select "(.text.text_cpu2|.text.text_cpu2.*)";
+                }
+                
             }
         }
         
