@@ -125,6 +125,7 @@ void Can_Init(CAN_BAUDRATES ls_baudrate, CAN_NODE CAN_Node)
     g_mcmcan.canNodeConfig.interruptConfig.traco.priority = ISR_PRIORITY_CAN_TX;
     g_mcmcan.canNodeConfig.interruptConfig.traco.interruptLine = IfxCan_InterruptLine_0;
     g_mcmcan.canNodeConfig.interruptConfig.traco.typeOfService = IfxSrc_Tos_cpu0;
+    IfxCan_Can_initNode(&g_mcmcan.canSrcNode, &g_mcmcan.canNodeConfig);
 
     /* Reception handling configuration */
     g_mcmcan.canNodeConfig.rxConfig.rxMode = IfxCan_RxMode_sharedFifo0;
@@ -145,7 +146,6 @@ void Can_Init(CAN_BAUDRATES ls_baudrate, CAN_NODE CAN_Node)
     g_mcmcan.canNodeConfig.interruptConfig.rxf0n.interruptLine = IfxCan_InterruptLine_1;
     g_mcmcan.canNodeConfig.interruptConfig.rxf0n.typeOfService = IfxSrc_Tos_cpu0;
     IfxCan_Can_initNode(&g_mcmcan.canDstNode, &g_mcmcan.canNodeConfig);
-    IfxCan_Can_initNode(&g_mcmcan.canSrcNode, &g_mcmcan.canNodeConfig);
 
     /* Rx filter configuration (default: all messages accepted) */
     Can_SetFilterRange(0x0, 0x7FF);
