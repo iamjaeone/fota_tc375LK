@@ -4,9 +4,8 @@
 
 #include "can.h"
 
-#include "IfxCan_Can.h"
-
 #include "cantp.h"
+#include "IfxCan_Can.h"
 #include <string.h>
 
 /*********************************************************************************************************************/
@@ -39,7 +38,6 @@ typedef struct
 } McmcanType;
 
 
-
 /*********************************************************************************************************************/
 /*-------------------------------------------------Global variables--------------------------------------------------*/
 /*********************************************************************************************************************/
@@ -66,6 +64,7 @@ void Can_TxIsrHandler(void)
 {
     /* Clear the "Transmission Completed" interrupt flag */
     IfxCan_Node_clearInterruptFlag(g_mcmcan.canSrcNode.node, IfxCan_Interrupt_transmissionCompleted);
+    P00_OUT.B.P6 = !P00_OUT.B.P6;  /* Toggle LED2 to indicate message transmission */
 }
 
 /* Default CAN Rx Handler */

@@ -32,8 +32,8 @@
 #define DMU_HF_STATUS (*(volatile uint32 *)(DMU_ADDRESS | HF_STATUS_OFFSET))
 #define DMU_HF_ERRSR (*(volatile uint32 *)(DMU_ADDRESS | HF_ERRSR_OFFSET))
 
-#define SIZE_OF_ERASE_SECTOR_FUNCTION (0x00000200U)
-#define SIZE_OF_WRITE_PAGE_FUNCTION (0x00000200U)
+#define SIZE_OF_ERASE_SECTOR_FUNCTION (0x1000U)
+#define SIZE_OF_WRITE_PAGE_FUNCTION (0x1000U)
 
 /*********************************************************************************************************************/
 /*-------------------------------------------------Type Definitions--------------------------------------------------*/
@@ -50,12 +50,12 @@ typedef struct
 {
     uint32 startAddress;
     uint32 endAddress;
-    uint32 maxSize;
 } MemoryRegion;
 
 const MemoryRegion VALID_MEMORY_REGIONS[] = {
-    {0xA0020000, 0xA0300000, (0x300000 - 0x20000)}, // Application A: 3MB - 128KB
-    {0xA0300000, 0xA0600000, 0x300000}              // Application B: 3MB
+    {0xA0020000, 0xA0300000}    // Application A: 3MB - 128KB
+    , {0xA0300000, 0xA0600000}              // Application B: 3MB
+    , {0xAF000000, 0xAF100000}              // Data Flash 0: 1MB
 };
 
 /*********************************************************************************************************************/
@@ -67,7 +67,7 @@ const MemoryRegion VALID_MEMORY_REGIONS[] = {
 /*********************************************************************************************************************/
 
 uint8 eraseSector(uint32 sectorAddress, uint8 sectorSize, FlashType flashType);
-uint8 writePage(uint32 startAddr, uint8 *data, uint32 dataSize, FlashType flashType);
+uint8 writePage(uint32 startAddr, const uint8 *data, uint32 dataSize, FlashType flashType);
 
 /*********************************************************************************************************************/
 /*---------------------------------------------Function Implementations----------------------------------------------*/
@@ -110,7 +110,7 @@ inline static FlashType getFlashType(uint32 address)
     }
 }
 
-uint8 Flash_erase(uint32 startAddress, uint32 eraseSize)
+uint8 Flash_Erase(uint32 startAddress, uint32 eraseSize)
 {
     FlashType flashType = getFlashType(startAddress);
     if (flashType == -1)
@@ -132,13 +132,13 @@ uint8 Flash_erase(uint32 startAddress, uint32 eraseSize)
     return erase(startAddress, eraseSize, flashType);
 }
 
-uint8 Flash_write(uint32 startAddr, uint8 *data, uint32 dataSize)
+uint8 Flash_Write(uint32 startAddr, const uint8 *data, uint32 dataSize)
 {
     FlashType flashType = getFlashType(startAddr);
     if (flashType == -1)
         return -1;
 
-    uint8 (*write)(uint32 startAddr, uint8 *data, uint32 dataSize, FlashType flashType) = writePage;
+    uint8 (*write)(uint32 startAddr, const uint8 *data, uint32 dataSize, FlashType flashType) = writePage;
     if (flashType == FLASH_TYPE_PFLASH0)
     {
         memcpy((void *)CPU0_PSPR_ADDR, (const void *)writePage, SIZE_OF_WRITE_PAGE_FUNCTION);
@@ -181,7 +181,7 @@ uint8 eraseSector(uint32 startAddress, uint8 eraseSectorCount, FlashType flashTy
     return DMU_HF_ERRSR & 0xFF;
 }
 
-uint8 writePage(uint32 startAddr, uint8 *data, uint32 dataSize, FlashType flashType)
+uint8 writePage(uint32 startAddr, const uint8 *data, uint32 dataSize, FlashType flashType)
 {
     __disable();
 

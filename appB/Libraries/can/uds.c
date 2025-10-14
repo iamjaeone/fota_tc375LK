@@ -6,7 +6,6 @@
 #include "can.h"
 #include "cantp.h"
 #include "flash_programming.h"
-#include "bcb.h"
 
 #include <string.h>
 
@@ -112,6 +111,7 @@ void UDS_HandleFrame(const uint8 *data, uint16 length)
     case UDS_SERVICE_DIAGNOSTIC_SESSION_CONTROL:
     {
         /* 얘는 Application에서 Bootloader로 점프할 때 쓰는 거라 Bootloader에서는 필요없음 */
+        // Bootloader Flag 설정하고 Reset
         break;
     }
     case UDS_SERVICE_ROUTINE_CONTROL:
@@ -144,14 +144,6 @@ void UDS_HandleFrame(const uint8 *data, uint16 length)
     default:
         break;
     }
-}
-
-void UDS_ResponseDiagnosticSessionControl(void)
-{
-    uint8 response[2];
-    response[0] = UDS_SERVICE_DIAGNOSTIC_SESSION_CONTROL + 0x40; // Positive Response
-    response[1] = 0x10;                                          // Echo SubFunction
-    CANTP_SendCanTPMessage(response, 2);
 }
 
 static void routineControlEraseFlash(const uint8 *data)
@@ -187,13 +179,13 @@ static void handleRoutineControlService(const uint8 *data, uint16 length)
 {
     UDS_ROUTINE_IDENTIFIER routineIdentifier = (data[2] << 8) | data[3];
 
-    /*
-     *   Sub-function: StartRoutine(0x01) 말고 나중에 더 추가할지 말지
-     *   - 0x02: StopRoutine
-     *   - 0x03: RequestRoutineResults
-     */
+     /*
+      *   Sub-function: StartRoutine(0x01) 말고 나중에 더 추가할지 말지
+      *   - 0x02: StopRoutine
+      *   - 0x03: RequestRoutineResults
+      */ 
     uint8 subFunction = data[1];
-
+    
     switch (routineIdentifier)
     {
     case UDS_ROUTINE_IDENTIFIER_ERASE_FLASH:
@@ -286,6 +278,7 @@ static void handleTransferDataService(const uint8 *data, uint16 length)
         return;
     }
 
+
     // Process the received data block
     uint16 dataSize = length - 2; // Subtracting service ID and block sequence counter
 
@@ -335,26 +328,15 @@ static void handleRequestTransferExitService(const uint8 *data, uint16 length)
 static void handleEcuResetService(const uint8 *data, uint16 length)
 {
     uint8 resetType = data[1]; // 0x01: Hard Reset, 0x02: Key Off On Reset, 0x03: Soft Reset
+    // Reset the ECU
+
     // Send positive response
-    switch (resetType)
-    {
-    case 0x01:
-    {
-        uint8 response[2];
-        response[0] = UDS_SERVICE_ECU_RESET + 0x40; // Positive Response
-        response[1] = resetType;
-        CANTP_SendCanTPMessage(response, 2);
+    uint8 response[8];
+    response[0] = UDS_SERVICE_ECU_RESET + 0x40; // Positive Response
+    response[1] = resetType;
+    CANTP_SendCanTPMessage(response, 2);
 
-        /* Check Message Sent -> CAN 공부 후에 구현 */
-        volatile int wait = 10000;
-        while (wait--)
-            ;
+    /* Check Message Sent -> CAN 공부 후에 구현 */
 
-        // Jump To Application
-        BCB_JumpToApplication(TRUE);
-        break;
-    }
-    default:
-        break;
-    }
+    // TODO -- Reset the system here
 }

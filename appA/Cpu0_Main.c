@@ -29,8 +29,15 @@
 #include "IfxScuWdt.h"
 #include "Ifx_Cfg_Ssw.h"
 #include "Multicore.h"
+#include "can.h"
 
 #define ERU_PRIORITY 0x10
+
+#define SCU_BASE_ADDRESS 0xF0036000
+#define SCU_RSTCON_OFFSET 0x0058
+#define SCU_RSTCON_SMU_MASK (3 << 6)
+
+#define SCU_RSTCON (*(volatile uint32*)(SCU_BASE_ADDRESS | SCU_RSTCON_OFFSET))
 
 
 void interruptInit()
@@ -65,24 +72,35 @@ IFX_ALIGN(4) IfxCpu_syncEvent cpuSyncEvent = 0;
 
 void core0_main(void)
 {
-    IfxCpu_enableInterrupts();
-    
-    /* !!WATCHDOG0 AND SAFETY WATCHDOG ARE DISABLED HERE!!
-     * Enable the watchdogs and service them periodically if it is required
-     */
-    IfxScuWdt_disableCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
+    IfxScuWdt_serviceCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
     IfxScuWdt_disableSafetyWatchdog(IfxScuWdt_getSafetyWatchdogPassword());
+
     
+    uint16 password = IfxScuWdt_getSafetyWatchdogPasswordInline();
+    IfxScuWdt_clearSafetyEndinitInline(password);
+
+    // SMU: System Reset (01)
+    SCU_RSTCON = (SCU_RSTCON & ~SCU_RSTCON_SMU_MASK) | (1 << 6);
+    
+    IfxScuWdt_setSafetyEndinitInline(password);
+
     /* Wait for CPU sync event */
     IfxCpu_emitEvent(&cpuSyncEvent);
     IfxCpu_waitEvent(&cpuSyncEvent, 1);
-    
-    interruptInit();
 
+    Can_Init(BD_500K, CAN_NODE2);
+    
+    IfxCpu_enableInterrupts();
+    
     initLEDAndTime();
 
     while(1)
     {
+        if(g_can_rxBufferHead != g_can_rxBufferTail)
+        {
+            Can_HandleMessage();
+        }
         controlLEDflag();
+        IfxScuWdt_serviceCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
     }
 }

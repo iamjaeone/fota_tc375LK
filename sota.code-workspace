@@ -17,7 +17,13 @@
 			"ifxscuwdt.h": "c",
 			"can.h": "c",
 			"ifxcan_can.h": "c",
-			"cantp.h": "c"
+			"cantp.h": "c",
+			"ifxcpu_intrinsics.h": "c",
+			"stdint.h": "c",
+			"assert.h": "c",
+			"flash_programming.h": "c",
+			"crc16.h": "c",
+			"stddef.h": "c"
 		}
 	}
 }
