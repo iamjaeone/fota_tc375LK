@@ -12,6 +12,5 @@
 /*********************************************************************************************************************/
 void UDS_HandleFrame(const uint8* data, uint16 length);
 
-void UDS_ResponseDiagnosticSessionControl(void);
 
 #endif /* UDS_H_ */

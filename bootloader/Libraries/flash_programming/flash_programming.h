@@ -10,8 +10,8 @@
 #define PFLASH_PAGE_SIZE    (0x20U) // 32 Bytes
 
 boolean isAddressInValidRegion(uint32 address, uint32 size);
-uint8 Flash_erase(uint32 startAddress, uint32 eraseSize);
-uint8 Flash_write(uint32 startAddr, uint8* data, uint32 dataSize);
+uint8 Flash_Erase(uint32 startAddress, uint32 eraseSize);
+uint8 Flash_Write(uint32 startAddr, const uint8* data, uint32 dataSize);
 
 
 

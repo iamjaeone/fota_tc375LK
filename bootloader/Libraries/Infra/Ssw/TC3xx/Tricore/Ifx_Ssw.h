@@ -58,13 +58,13 @@
 
 #if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) || defined(DEVICE_TC37XED) || defined(DEVICE_TC37X) || defined(DEVICE_TC36X) || defined(DEVICE_TC35X) || defined(DEVICE_TC33XED)
 #ifndef IFX_CFG_SSW_ENABLE_TRICORE1
-#define IFX_CFG_SSW_ENABLE_TRICORE1 (1U)
+#define IFX_CFG_SSW_ENABLE_TRICORE1 (0U)
 #endif
 #endif /* #if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) || defined(DEVICE_TC37XED) || defined(DEVICE_TC37X) || defined(DEVICE_TC36X) || defined(DEVICE_TC35X) || defined(DEVICE_TC33XED) */
 
 #if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) || defined(DEVICE_TC37XED) || defined(DEVICE_TC37X) || defined(DEVICE_TC35X)
 #ifndef IFX_CFG_SSW_ENABLE_TRICORE2
-#define IFX_CFG_SSW_ENABLE_TRICORE2 (1U)
+#define IFX_CFG_SSW_ENABLE_TRICORE2 (0U)
 #endif
 #endif /* #if defined(DEVICE_TC39XB) || defined(DEVICE_TC38EVOX) || defined(DEVICE_TC38X) || defined(DEVICE_TC37XED) || defined(DEVICE_TC37X) || defined(DEVICE_TC35X) */
 
