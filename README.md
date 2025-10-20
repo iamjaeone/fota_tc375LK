@@ -1,6 +1,6 @@
-# Automotive Firmware OTA (FOTA) System for Infineon TC375
+# FOTA update solution for an automotive ECU
 
-A portfolio project demonstrating a robust, safe Firmware Over-the-Air update solution for an automotive ECU, built from the ground up with a focus on reliability.
+Automotive Firmware OTA (FOTA) System for Infineon TC375 Lite Kit
 
 ---
 
@@ -24,7 +24,7 @@ A portfolio project demonstrating a robust, safe Firmware Over-the-Air update so
 ### 📂 **Project Structure & Core Libraries**
 
 ```
-sota/
+fota/
 ├── bootloader/       # 🛡️ ECU Bootloader Application
 │   └── Libraries/
 │       └── ota/      # ✨ Custom-built FOTA library
