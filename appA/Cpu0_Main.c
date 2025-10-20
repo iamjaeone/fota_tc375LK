@@ -30,6 +30,9 @@
 #include "Ifx_Cfg_Ssw.h"
 #include "Multicore.h"
 #include "can.h"
+#include "cantp.h"
+
+#include "bcb.h"
 
 #define ERU_PRIORITY 0x10
 
@@ -72,23 +75,16 @@ IFX_ALIGN(4) IfxCpu_syncEvent cpuSyncEvent = 0;
 
 void core0_main(void)
 {
-    IfxScuWdt_serviceCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
+    BCB_ApplicationInit();
+
+    IfxScuWdt_disableCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
     IfxScuWdt_disableSafetyWatchdog(IfxScuWdt_getSafetyWatchdogPassword());
-
-    
-    uint16 password = IfxScuWdt_getSafetyWatchdogPasswordInline();
-    IfxScuWdt_clearSafetyEndinitInline(password);
-
-    // SMU: System Reset (01)
-    SCU_RSTCON = (SCU_RSTCON & ~SCU_RSTCON_SMU_MASK) | (1 << 6);
-    
-    IfxScuWdt_setSafetyEndinitInline(password);
 
     /* Wait for CPU sync event */
     IfxCpu_emitEvent(&cpuSyncEvent);
     IfxCpu_waitEvent(&cpuSyncEvent, 1);
 
-    Can_Init(BD_500K, CAN_NODE2);
+    Can_Init(BD_500K, CAN_NODE0);
     
     IfxCpu_enableInterrupts();
     
@@ -96,11 +92,8 @@ void core0_main(void)
 
     while(1)
     {
-        if(g_can_rxBufferHead != g_can_rxBufferTail)
-        {
-            Can_HandleMessage();
-        }
-        controlLEDflag();
-        IfxScuWdt_serviceCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
+        Can_MainFunction();
+        CANTP_MainFunction();
+        turnLEDon();
     }
 }

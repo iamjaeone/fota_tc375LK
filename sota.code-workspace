@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "bootloader"
+		},
+		{
+			"path": "tester"
 		}
 	],
 	"settings": {
@@ -23,7 +26,13 @@
 			"assert.h": "c",
 			"flash_programming.h": "c",
 			"crc16.h": "c",
-			"stddef.h": "c"
+			"stddef.h": "c",
+			"string.h": "c",
+			"ifx_assert.h": "c",
+			"abswap.h": "c",
+			"ifxport_reg.h": "c",
+			"bcb.h": "c",
+			"ifxcpu.h": "c"
 		}
 	}
 }

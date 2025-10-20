@@ -4,6 +4,7 @@
             "name": "Bootloader",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/Libraries/ota/flash_programming/*",
                 "${workspaceFolder}/../ctc/include/**"
             ],
             "defines": [
@@ -11,7 +12,8 @@
                 "__interrupt(n)=",
                 "__vector_table(vectabNum)=",
                 "__TASKING__",
-                "__CPU__=tc37x"
+                "__CPU__=tc37x",
+                "__BOOTLOADER__"
             ]
         }
     ],
