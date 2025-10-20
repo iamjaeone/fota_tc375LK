@@ -29,11 +29,15 @@
 #include "IfxScuWdt.h"
 #include "Ifx_Cfg_Ssw.h"
 #include "Multicore.h"
+#include "bcb.h"
+#include "can.h"
+#include "cantp.h"
 
 IFX_ALIGN(4) IfxCpu_syncEvent cpuSyncEvent = 0;
 
 void core0_main(void)
 {
+    BCB_ApplicationInit();
     IfxCpu_enableInterrupts();
     
     /* !!WATCHDOG0 AND SAFETY WATCHDOG ARE DISABLED HERE!!
@@ -46,10 +50,12 @@ void core0_main(void)
     IfxCpu_emitEvent(&cpuSyncEvent);
     IfxCpu_waitEvent(&cpuSyncEvent, 1);
     
-    
+    Can_Init(BD_500K, CAN_NODE0);
     initLEDAndTime();
     while(1)
     {
-        controlLEDflag();
+        Can_MainFunction();
+        CANTP_MainFunction();
+        turnLEDon();
     }
 }
